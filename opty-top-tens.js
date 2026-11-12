@@ -30,15 +30,15 @@ const DESKS = {
   fx:{name:"Currencies",short:"FX",c:"--fx",
     what:"The ten most-traded currencies, each priced against the US dollar, plus the dollar index (DXY), which tracks the dollar against a basket of six major currencies.",
     why:"Currencies set the price of everything that crosses a border: imports, oil, company earnings abroad. A strong dollar squeezes emerging markets and commodity prices.",
-    read:["EUR/USD up means the euro got stronger against the dollar.","USD/JPY up means the dollar got stronger against the yen. The quote's first currency is the one moving.","Moves of 0.5% are big for currencies; 1% is a headline."]},
+    read:["EUR/USD up means the euro got stronger against the dollar.","USD/JPY up means the dollar got stronger against the yen. The quote's first currency is the one moving.","Currencies trade around the clock on weekdays, so this desk moves almost every hour."]},
   crypto:{name:"Crypto",short:"Crypto",c:"--crypto",
     what:"The ten largest crypto assets by market value, with stablecoins (pegged to $1), wrapped coins and tokenized funds removed so only real price-moving coins remain.",
     why:"Crypto trades 24/7 and reacts first to risk appetite and liquidity. Bitcoin leads; the rest usually follow with bigger swings.",
-    read:["Change is the last 24 hours, not since a market close, because crypto never closes.","The sparkline covers 7 days.","Moves of 3–5% are a normal day here."]},
+    read:["Change is over the last hour. Crypto never closes, so it moves every hour, day and night.","The sparkline covers 7 days.","Hourly moves of 1% are common here."]},
   commodities:{name:"Commodities",short:"Commodities",c:"--commodities",
     what:"Ten benchmark futures across energy, metals and farm goods, using the front-month contract (the next one to expire).",
     why:"Commodities are the raw cost of the economy. Oil feeds inflation, copper tracks factory demand, gold rises when people want safety.",
-    read:["Units differ: oil in $ per barrel, gold and silver in $ per troy ounce, copper in $ per pound, grains in cents per bushel, coffee in cents per pound, natural gas in $ per MMBtu.","Day change is against the prior settlement price.","About 15 minutes delayed."]},
+    read:["Units differ: oil in $ per barrel, gold and silver in $ per troy ounce, copper in $ per pound, grains in cents per bushel, coffee in cents per pound, natural gas in $ per MMBtu.","Change is over the last hour.","About 15 minutes delayed."]},
   stocks:{name:"Index Leaders",short:"Stocks",c:"--stocks",
     what:"The ten heaviest stocks inside each of the four big US indexes: the Dow 30, the S&P 500, the Nasdaq-100 and the Russell 2000 (small companies).",
     why:"A handful of giants drive each index. When the top ten move together the whole index moves with them.",
@@ -54,9 +54,9 @@ const IDXETF={dow:"DIA",sp500:"SPY",ndx:"Nasdaq.com",r2000:"IWM"};
 const UNITS={"WTI":"$/bbl","Brent":"$/bbl","NatGas":"$/MMBtu","Gold":"$/oz","Silver":"$/oz","Copper":"$/lb","Corn":"¢/bu","Soybeans":"¢/bu","Wheat":"¢/bu","Coffee":"¢/lb"};
 const TIERS=[[85,"🚀","Rocket"],[70,"🔥","Hot"],[57,"😎","Warming up"],[44,"😐","Flat"],[31,"🥶","Cooling"],[16,"📉","Sliding"],[0,"🧊","Frozen"]];
 const MEAN={"Rocket":"Big jump, much faster than normal for its group, and trading near its recent high.",
- "Hot":"Clearly up today and trending higher.","Warming up":"Leaning positive: a good day or a steady climb.",
+ "Hot":"Clearly up this hour and trending higher.","Warming up":"Leaning positive: a good hour or a steady climb.",
  "Flat":"Not much happening. Moving about as much as usual.","Cooling":"Leaning negative: drifting lower.",
- "Sliding":"Clearly down today and trending lower.","Frozen":"Big drop, much worse than normal for its group, near its recent low."};
+ "Sliding":"Clearly down this hour and trending lower.","Frozen":"Big drop, much worse than normal for its group, near its recent low."};
 const rng=k=>`${TIERS[k][0]}–${k?TIERS[k-1][0]-1:100}`;
 function keyCards(){return `<div class="key">${[...TIERS].reverse().map((t,j)=>{const k=TIERS.length-1-j;return `<div class="k" style="--mc:${moodColor(Math.min(100,t[0]+7))}"><span class="e">${t[1]}</span><b>${t[2]}</b><span class="rg">${rng(k)}</span><p>${MEAN[t[2]]}</p></div>`}).join("")}</div>`}
 function keyMini(){return `<div class="keymini"><span>Emoji key:</span>${[...TIERS].reverse().map(t=>`<span>${t[1]} <b>${t[2]}</b></span>`).join("")}<a href="#how">What they mean</a></div>`}
@@ -88,9 +88,12 @@ const dayOnly=s=>new Date(s.replace(" ","T")).toLocaleDateString("en-US",{weekda
 
 // score breakdown, same formula as the server
 function parts(i){const items=G[i.g].items, mv=items.map(x=>Math.abs(x.chg_pct||0)).sort((a,b)=>a-b);
-  const med=mv.length%2?mv[(mv.length-1)/2]:(mv[mv.length/2-1]+mv[mv.length/2])/2, typ=Math.max(med||1,.2);
+  const mdn=a=>a.length?(a.length%2?a[(a.length-1)/2]:(a[a.length/2-1]+a[a.length/2])/2):0;
+  const typ=Math.max(mdn(mv)||0.05,.05);
+  const tt=items.map(x=>{const s=(x.spark||[]).filter(Boolean);return s.length>1?Math.abs((s[s.length-1]/s[0]-1)*100):null}).filter(v=>v!=null).sort((a,b)=>a-b);
+  const ttyp=Math.max(mdn(tt)||1,.2);
   const sp=(i.spark||[]).filter(Boolean), z=(i.chg_pct||0)/typ;
-  const tr=sp.length>1?(sp[sp.length-1]/sp[0]-1)*100/typ:0, mn=Math.min(...sp), mx=Math.max(...sp);
+  const tr=sp.length>1?(sp[sp.length-1]/sp[0]-1)*100/ttyp:0, mn=Math.min(...sp), mx=Math.max(...sp);
   const pos=sp.length>1&&mx>mn?(sp[sp.length-1]-mn)/(mx-mn):.5;
   return {typ,z,move:25*Math.tanh(z/2),trend:15*Math.tanh(tr/3),range:20*(pos-.5),pos};}
 
@@ -137,11 +140,11 @@ function overview(){
   const s=avg(all.map(i=>i.mood.score)),t=tier(s),srt=[...all].sort((a,b)=>b.mood.score-a.mood.score);
   const hot=all.filter(i=>i.mood.score>=70).length,cold=all.filter(i=>i.mood.score<31).length;
   return `<section class="hero"><div class="big" style="--s:${s};--mc:${moodColor(s)}"><span class="e">${t[1]}</span><span class="n">${s}</span><span class="eyebrow">${t[2]}</span></div>
-   <div><div class="eyebrow">Market mood · ${dayOnly(D.updated)}</div><h2>${headline()}</h2>
-   <p>${all.length} assets across five desks, each scored 0 to 100 for how warm its price action is right now. ${hot} are running hot (70+) and ${cold} are cold (under 31). Tap any dot or card for the full read.</p></div></section>
+   <div><div class="eyebrow">Market vibes · ${dayOnly(D.updated)}</div><h2>${headline()}</h2>
+   <p>${all.length} assets across five desks, each scored 0 to 100 every hour for how warm its price action is right now. ${hot} are running hot (70+) and ${cold} are cold (under 31). Tap any dot or card for the full read.</p></div></section>
   <div class="strip"><h3>Every asset on one thermometer</h3><p class="sub">Each dot is one asset placed at its mood score. Colour shows its desk.</p>
    ${thermo()}<div class="legend">${ORDER.map(id=>`<span><i style="--c:${cvar(id)}"></i>${DESKS[id].name}</span>`).join("")}</div></div>
-  <section class="sec"><h2>What the emojis mean</h2><p class="lead">Every asset gets one of seven moods, from frozen to rocket, based on its 0–100 mood score. Each mood is judged against what is normal for that desk, so a 1% move in the euro counts for more than 1% in Solana. Add " · wild day" when the move was more than three times a normal day.</p>${keyCards()}</section>
+  <section class="sec"><h2>What the emojis mean</h2><p class="lead">Every asset gets one of seven moods, from frozen to rocket, based on its 0–100 mood score. Each mood is judged against what is normal for that desk this hour, so a 0.2% move in the euro counts for more than 0.2% in Solana. " · wild hour" means the move was more than three times a typical hourly move.</p>${keyCards()}</section>
   <section class="sec"><h2>The five desks</h2><p class="lead">Average mood per desk. The emoji row shows each member, in rank order.</p><div class="desks">${ORDER.map(deskCard).join("")}</div></section>
   <section class="sec"><div class="pair"><div class="list"><h3>🔥 Hottest right now</h3>${srt.slice(0,6).map(li).join("")}</div>
    <div class="list"><h3>🥶 Coldest right now</h3>${srt.slice(-6).reverse().map(li).join("")}</div></div></section>`;}
@@ -149,7 +152,7 @@ function overview(){
 function tile(i,rank,extra=""){const c=cvar(i.g);
   return `<button class="tile" style="--c:${c}" data-k="${esc(i.g+"|"+i.sym)}"><span class="rk">#${rank}</span>
    <span class="lb">${esc(i.label)}<small>${esc(i.name)}${UNITS[i.label]?" · "+UNITS[i.label]:""}</small></span><span class="em" title="${esc(i.mood.label)}">${i.mood.emoji}</span>
-   <span class="px">${fmtPx(i)}</span><span class="ch ${chCls(i.chg_pct)}">${fmtCh(i.chg_pct)}</span>${spark(i.spark,c)}${meter(i.mood.score)}${extra}</button>`;}
+   <span class="px">${fmtPx(i)}</span><span class="ch ${chCls(i.chg_pct)}" title="Change over the last hour">${fmtCh(i.chg_pct)}<small style="color:var(--mute);font-size:11px"> 1h</small></span>${spark(i.spark,c)}${meter(i.mood.score)}${extra}</button>`;}
 
 function intro(id){const d=DESKS[id],g=G[id],s=deskAvg(id),t=tier(s);
   return `<section class="hero"><div class="big" style="--s:${s};--mc:${moodColor(s)}"><span class="e">${t[1]}</span><span class="n">${s}</span><span class="eyebrow">${t[2]}</span></div>
@@ -169,21 +172,21 @@ function deskView(id){
      <div class="grid">${it.map((i,k)=>tile(i,k+1,`<span class="wt">${esc(i.desc.split(": ")[1]||i.desc)} · fee ${esc(i.expense)}</span>`)).join("")}</div>`;}
   return intro(id)+`<div class="grid">${G[id].items.map((i,k)=>tile(i,k+1)).join("")}</div>`;}
 
-function how(){return `<section class="hero" style="grid-template-columns:1fr"><div><div class="eyebrow">Method</div><h2>How the mood score works</h2>
-  <p>The mood score is a temperature reading for price action. It blends three things, each measured against how much that desk normally moves, so a 1% day means more for the euro than for Solana.</p></div></section>
+function how(){return `<section class="hero" style="grid-template-columns:1fr"><div><div class="eyebrow">Method</div><h2>How the vibe score works</h2>
+  <p>The vibe score is an hourly temperature reading for price action. It blends three things, each measured against how much that desk normally moves, so a small move in the euro means more than the same move in Solana.</p></div></section>
   <div class="how"><div class="card"><h3>The formula</h3>
-   <p><b>Today's move</b> (up to ±25 points): the day change divided by the desk's typical move (the median move of its ten members). A move three times bigger than typical is flagged as a wild day.</p>
-   <p><b>Trend</b> (up to ±15 points): the change from the start to the end of the sparkline, on the same scale.</p>
+   <p><b>This hour's move</b> (up to ±25 points): the change over the last hour divided by the desk's typical hourly move (the median of its ten members). A move three times bigger than typical is flagged as a wild hour.</p>
+   <p><b>Trend</b> (up to ±15 points): the change from the start to the end of the sparkline, divided by the desk's typical trend.</p>
    <p><b>Range position</b> (±10 points): where the latest price sits between the sparkline's low and high.</p>
    <div class="formula">score = 50
       + 25 × tanh(move ÷ typical ÷ 2)
-      + 15 × tanh(trend ÷ typical ÷ 3)
+      + 15 × tanh(trend ÷ typical trend ÷ 3)
       + 20 × (range position − 0.5)</div>
-   <p style="margin-top:10px">The tanh curve keeps one extreme day from pinning the score at 0 or 100.</p></div>
-  <div class="card" style="grid-column:1/-1"><h3>The seven moods</h3>${keyCards()}<p style="margin-top:12px">" · wild day" is added when today's move is more than three times a normal day for that desk.</p>
+   <p style="margin-top:10px">The tanh curve keeps one extreme hour from pinning the score at 0 or 100. Stocks and ETFs only trade 9:30 AM–4 PM ET on weekdays; outside those hours their hourly change is 0%.</p></div>
+  <div class="card" style="grid-column:1/-1"><h3>The seven moods</h3>${keyCards()}<p style="margin-top:12px">" · wild hour" is added when the hour's move is more than three times a typical hourly move for that desk.</p>
    <p style="margin-top:14px">It describes what already happened. It is not a forecast and not a buy or sell signal.</p></div>
   <div class="card"><h3>Where the numbers come from</h3><p>Currencies, commodities, stocks and ETF prices: Yahoo Finance. Crypto prices and rankings: CoinGecko. Dow and S&amp;P 500 weights: State Street (DIA, SPY holdings). Nasdaq-100 weights and ETF assets: Nasdaq.com. Russell 2000: iShares IWM filings.</p>
-   <p>Collected every 15 minutes by the Opty data station; the ETF ranking refreshes each morning. Snapshot shown: ${when(D.updated)}.</p></div>
+   <p>Updated every hour, around the clock, by the Opty data station; the ETF ranking refreshes each morning. Showing: ${when(D.updated)}.</p></div>
   <div class="card"><h3>Fine print</h3><p>For information and entertainment. Not investment advice. Prices may be delayed and can contain errors; check a primary source before acting.</p></div></div>`;}
 
 // detail dialog
@@ -194,10 +197,10 @@ function openDetail(k){const [g,sym]=k.split("|"),i=G[g].items.find(x=>x.sym===s
   R.getElementById("dlgBody").innerHTML=`<header><div><div class="eyebrow" style="color:${c}">${DESKS[g].name}</div><h3>${i.mood.emoji} ${esc(i.label)} <span style="color:var(--mute);font-weight:500;font-size:16px">${esc(i.name)}</span></h3></div><button class="x" id="dlgX">Close</button></header>
    <div style="display:flex;gap:16px;align-items:baseline;margin-top:8px"><span class="num" style="font-size:26px;font-weight:600">${fmtPx(i)}</span><span class="num ${chCls(i.chg_pct)}" style="font-size:18px">${fmtCh(i.chg_pct)}</span></div>
    ${spark(i.spark,c,90,480)}${meter(i.mood.score)}
-   <div class="brk"><div><span>Base</span><b>50.0</b></div><div><span>Today's move (${p.z.toFixed(1)}× a typical ${p.typ.toFixed(2)}% day)</span><b>${f(p.move)}</b></div>
+   <div class="brk"><div><span>Base</span><b>50.0</b></div><div><span>This hour's move (${p.z.toFixed(1)}× a typical ${p.typ.toFixed(2)}% hour)</span><b>${f(p.move)}</b></div>
    <div><span>Trend over the sparkline</span><b>${f(p.trend)}</b></div><div><span>Range position (${Math.round(p.pos*100)}% of low→high)</span><b>${f(p.range)}</b></div>
    <div class="tot"><span>Mood score · ${esc(i.mood.label)}</span><b>${i.mood.score}</b></div></div>
-   <dl class="kv"><dt>As of</dt><dd>${when(i.time)}</dd>${extra}</dl>`;
+   <dl class="kv"><dt>Last hour</dt><dd>${fmtCh(i.chg_pct)}</dd>${i.day_pct!=null?`<dt>Since prior close</dt><dd>${fmtCh(i.day_pct)}</dd>`:""}<dt>Price as of</dt><dd>${when(i.time)}</dd>${extra}</dl>`;
   R.getElementById("dlgX").onclick=()=>dlg.close(); dlg.showModal();}
 dlg.addEventListener("click",e=>{if(e.target===dlg) dlg.close()});
 
@@ -205,9 +208,9 @@ dlg.addEventListener("click",e=>{if(e.target===dlg) dlg.close()});
 const VIEWS=["overview",...ORDER,"how"];
 function render(){let v=HOST._view; if(!VIEWS.includes(v)) v="overview";
   const tabs=VIEWS.map(id=>`<a href="#${id}" ${id===v?'aria-current="page"':""} style="--c:${DESKS[id]?cvar(id):"var(--ink)"}">${id==="overview"?"Overview":id==="how"?"How it works":DESKS[id].name}</a>`).join("");
-  R.getElementById("app").innerHTML=`<div class="wrap"><header class="top"><div class="brand"><h1>Opty Top Tens <span>· market mood board</span></h1><span class="eyebrow">Snapshot ${when(D.updated)}</span></div><nav class="tabs" aria-label="Desks">${tabs}</nav></header>${EMBED?'<div class="scroller" id="sc">':""}
+  R.getElementById("app").innerHTML=`<div class="wrap"><header class="top"><div class="brand"><h1>Market Vibes <span>· by Optymystz</span></h1><span class="eyebrow">Updated hourly · ${when(D.updated)}</span></div><nav class="tabs" aria-label="Desks">${tabs}</nav></header>${EMBED?'<div class="scroller" id="sc">':""}
    <main>${v==="overview"?overview():v==="how"?how():deskView(v)}</main>
-   <footer>Opty Top Tens by Optymystz. Data: Yahoo Finance, CoinGecko, State Street, Nasdaq.com, iShares. Mood scores describe recent price action only. Not investment advice.</footer>${EMBED?"</div>":""}</div>`;
+   <footer>Market Vibes by Optymystz. Data: Yahoo Finance, CoinGecko, State Street, Nasdaq.com, iShares. Mood scores describe recent price action only. Not investment advice.</footer>${EMBED?"</div>":""}</div>`;
   bind(); if(v!==render.last){if(EMBED){const s=R.getElementById("sc");if(s)s.scrollTop=0}else if(render.last){const y=HOST.getBoundingClientRect().top;if(y<0)window.scrollBy(0,y-10)}render.last=v}}
 function bind(){
   R.querySelectorAll("[data-k]").forEach(b=>b.addEventListener("click",()=>openDetail(b.dataset.k)));
@@ -218,9 +221,9 @@ function bind(){
 
 // ===== poster renderer =====
 function poster(id){document.documentElement.classList.add("poster");document.documentElement.setAttribute("data-theme","light");
-  const foot=`<div class="foot"><div>Mood 0–100 blends today's move, the recent trend and where price sits in its range, scaled to each desk's normal moves. A temperature, not a trade signal. Not investment advice.<br>Data: Yahoo Finance · CoinGecko · State Street · Nasdaq.com · iShares</div><b>Interactive board → link in bio</b></div>`;
+  const foot=`<div class="foot"><div>Mood 0–100 blends the hour's move, the recent trend and where price sits in its range, scaled to each desk's normal moves. A temperature, not a trade signal. Not investment advice.<br>Data: Yahoo Finance · CoinGecko · State Street · Nasdaq.com · iShares</div><b>Interactive board → link in bio</b></div>`;
   const keyrow=`<div class="keyrow">${[...TIERS].reverse().map(t=>`<span><i>${t[1]}</i><b>${t[2]}</b>${t[0]}+</span>`).join("")}</div>`;
-  const top=`<div class="top"><b>Opty Top Tens</b><span>${dayOnly(D.updated)}</span></div>`;
+  const top=`<div class="top"><b>Market Vibes</b><span>${dayOnly(D.updated)}</span></div>`;
   const row=(i,k)=>`<div class="r"><span class="rk">${String(k+1).padStart(2,"0")}</span><span class="em">${i.mood.emoji}</span><span class="lb">${esc(i.label)}<small>${esc(id==="etfs"?big(i.aum):i.name===i.label?"":i.name)}</small></span><span class="px">${fmtPx(i)}</span><span class="ch ${chCls(i.chg_pct)}">${fmtCh(i.chg_pct)}</span><span class="mt"><span class="m"><b style="width:${i.mood.score}%;--mc:${moodColor(i.mood.score)}"></b></span><span>${i.mood.score}</span></span></div>`;
   let html;
   if(id==="overview"){const s=avg(all.map(i=>i.mood.score)),t=tier(s),srt=[...all].sort((a,b)=>b.mood.score-a.mood.score);
@@ -231,9 +234,9 @@ function poster(id){document.documentElement.classList.add("poster");document.do
       <div class="pdesks">${ORDER.map(d=>{const a=deskAvg(d),tt=tier(a);return `<div class="pd" style="--c:${cvar(d)}"><div class="t">${DESKS[d].short}</div><div class="em">${tt[1]}</div><div class="sc">${a}</div><div class="l">${tt[2]}</div></div>`}).join("")}</div>
       <div class="ppair"><div><h4>🔥 Hottest</h4>${srt.slice(0,3).map(cr).join("")}</div><div><h4>🥶 Coldest</h4>${srt.slice(-3).reverse().map(cr).join("")}</div></div></div>${keyrow}${foot}`;}
   else if(id==="key"){
-    html=`${top}<div class="head"><div><h2>How to read the emojis</h2><p>Every asset gets a mood score from 0 to 100: today's move, the recent trend and where the price sits in its range, judged against what is normal for its group.</p></div><div class="gauge"><div class="e">🌡️</div></div></div>
+    html=`${top}<div class="head"><div><h2>How to read the emojis</h2><p>Every asset gets a vibe score from 0 to 100 every hour: the hour's move, the recent trend and where the price sits in its range, judged against what is normal for its group.</p></div><div class="gauge"><div class="e">🌡️</div></div></div>
       <div class="klist">${TIERS.map((t,k)=>`<div class="kr"><div class="e">${t[1]}</div><div><h3>${t[2]}<span>${rng(k)}</span></h3><p>${MEAN[t[2]]}</p><div class="sw" style="--mc:${moodColor(Math.min(100,t[0]+7))}"></div></div></div>`).join("")}</div>
-      <div class="wild">"· wild day" means the move was more than 3× a normal day for that group. The mood describes what already happened. It is not a forecast.</div>${foot}`;}
+      <div class="wild">"· wild hour" means the move was more than 3× a normal hour for that group. The mood describes what already happened. It is not a forecast.</div>${foot}`;}
   else if(id==="stocks"){const by={};G.stocks.items.forEach(i=>by[i.sym]=i);const s=deskAvg(id),t=tier(s);
     html=`${top}<div class="head" style="--c:${cvar(id)}"><div><h2>Index leaders ${verb(s,id)}</h2><p>The ten heaviest stocks in each of the four big US indexes, scored by mood.</p></div>
       <div class="gauge"><div class="e">${t[1]}</div><div class="n">${s}</div><div class="l">${t[2]}</div></div></div>
