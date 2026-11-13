@@ -363,15 +363,15 @@
  "weekly": {
   "friday": "2026-11-13",
   "expiry": "2026-11-20",
-  "asof": "2026-11-12T07:24:53Z",
-  "preview": true,
-  "sitOut": false,
+  "asof": "2026-11-13T20:44:00Z",
+  "preview": false,
+  "sitOut": true,
   "mood": [
    {
     "emo": "\ud83c\udf0a",
     "name": "Volatility",
-    "c": "g",
-    "word": "Calm"
+    "c": "y",
+    "word": "Choppy"
    },
    {
     "emo": "\ud83e\udded",
@@ -382,8 +382,8 @@
    {
     "emo": "\ud83d\udcb3",
     "name": "Credit",
-    "c": "r",
-    "word": "Stressed"
+    "c": "g",
+    "word": "Healthy"
    },
    {
     "emo": "\ud83e\udde9",
@@ -392,42 +392,6 @@
     "word": "Mixed"
    }
   ],
-  "trades": [
-   {
-    "id": "WK-2026-11-13-bullput",
-    "tk": "SPY",
-    "lv": "weekly",
-    "kind": "put_spread",
-    "price": 759.81,
-    "collect": 47,
-    "risk": 453,
-    "odds": 84,
-    "rank": 0,
-    "limit": 0.47,
-    "debit": false,
-    "legs": [
-     {
-      "side": "sell",
-      "type": "put",
-      "strike": 741,
-      "px": 1.82
-     },
-     {
-      "side": "buy",
-      "type": "put",
-      "strike": 736,
-      "px": 1.35
-     }
-    ],
-    "sp": 741,
-    "lp": 736,
-    "sc": null,
-    "lc": null,
-    "lo": 741,
-    "hi": null,
-    "roomDown": 2.5,
-    "roomUp": null
-   }
-  ]
+  "trades": []
  }
 }
