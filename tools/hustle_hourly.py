@@ -331,6 +331,18 @@ def ntfy(env, title, body):
         log("ntfy failed:", e)
 
 
+def held_friday():
+    """The Friday play while it is held on the paper account, at 1 contract (written each hour by
+    ~/hustle/third_hustle.py track). Only the Friday play is ever public; stale files are ignored."""
+    p = os.path.join(HOME, "public_friday.json")
+    try:
+        d = json.load(open(p))
+        age = datetime.now(timezone.utc) - datetime.fromisoformat(d["asof"])
+        return d.get("held_friday") if age < timedelta(hours=20) else None
+    except Exception:
+        return None
+
+
 # ---------------------------------------------------------------- main
 def main():
     env = load_env()
@@ -362,6 +374,7 @@ def main():
         log("no quote for", ", ".join(missing))
     out = build(data, prev, opts, stocks, datetime.now(timezone.utc))
     out["missing_quotes"] = missing
+    out["held_friday"] = held_friday()
     msgs = alerts_for(out, prev)
     json.dump(out, open(hp, "w"), indent=1)
     s = out["summary"]

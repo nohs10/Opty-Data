@@ -84,6 +84,17 @@ function render() {
         <div class="stats num"><span><span class="k">💵 Premium</span><b>${usd(t.collect)}</b></span><span><span class="k">⚠️ Risk</span><b>${usd(t.risk)}</b></span>${t.odds ? `<span><span class="k">🎯 Probability</span><b>${t.odds}%</b></span>` : ""}<span><span class="k">⏳ Left</span><b>${daysTo(w.expiry)}d</b></span></div>`;
     }
   } else { $("friday").hidden = true; $("mood").closest("section").hidden = true; }
+  // A Friday play still open from an earlier Friday (shown at 1 contract until it closes).
+  const hf = HOURLY && HOURLY.held_friday;
+  if (hf && !(w && !w.sitOut && w.trades && w.trades[0] && w.trades[0].id === hf.id)) {
+    $("friday").hidden = false;
+    const k = s => hf.legs.filter(l => l.side === s).map(l => l.strike).join("/");
+    const odds = hf.odds_now == null ? "" : ` · ${hf.odds_entry != null ? Math.round(hf.odds_entry) + "% → " : ""}${Math.round(hf.odds_now)}%`;
+    $("friday").insertAdjacentHTML("beforeend", `<div class="pulse" style="margin-top:12px;flex-direction:column;align-items:flex-start;gap:6px">
+      <b>📌 Still open: ${hf.tk} ${k("sell")}/${k("buy")} ${hf.legs[0].type}s · expires ${nice(hf.expiry)} · 1 contract</b>
+      <span class="mv">💵 Opened at ${usd(Math.round(hf.entry_credit * 100))}${hf.mid_now != null ? ` · costs ${usd(Math.round(hf.mid_now * 100))} to close now` : ""} · ${mv(hf.since_close_pct)} since the prior close · ${mv(hf.hour_pct)} this hour</span>
+      <span class="sig ${hf.signal || "steady"}">${SIG[hf.signal || "steady"]}${odds} · ⏳ ${hf.days_left}d left</span></div>`);
+  }
   renderBoard();
 }
 
