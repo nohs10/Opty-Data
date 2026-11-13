@@ -332,8 +332,8 @@ def ntfy(env, title, body):
 
 
 def held_friday():
-    """The Friday play while it is held on the paper account, at 1 contract (written each hour by
-    ~/hustle/third_hustle.py track). Only the Friday play is ever public; stale files are ignored."""
+    """The Friday play while it is still open, at 1 contract (from ~/hustle/public_friday.json).
+    Stale files are ignored."""
     p = os.path.join(HOME, "public_friday.json")
     try:
         d = json.load(open(p))
