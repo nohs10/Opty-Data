@@ -27,6 +27,7 @@ const nice = iso => D(iso).toLocaleDateString(undefined, {weekday: "short", mont
 const todayET = () => new Date().toLocaleDateString("en-CA", {timeZone: "America/New_York"});
 const daysTo = iso => Math.max(0, Math.round((D(iso) - D(todayET())) / 864e5));
 const usd = v => "$" + Math.round(v).toLocaleString();
+const when = iso => { const t = new Date(iso); return t.toLocaleDateString(undefined, {weekday: "short", month: "short", day: "numeric", timeZone: "America/New_York"}) + " at " + t.toLocaleTimeString(undefined, {hour: "numeric", minute: "2-digit", timeZone: "America/New_York"}) + " ET"; };
 const winText = t => t.kind === "iron_condor" ? `between $${t.lo}–$${t.hi}` : t.kind === "call_debit" ? `above $${t.lc}` : `above $${t.lo}`;
 const shape = t => t.kind === "iron_condor" ? "🦅 Range play" : t.kind === "call_debit" ? "🚀 Upside play" : "🐂 Stay-above play";
 let filter = "all", all = [];
@@ -40,10 +41,10 @@ const strategyName = t => t.kind === "iron_condor" ? "Iron condor" : t.kind === 
 function render() {
   const d = DATA;
   $("date").textContent = "📅 " + nice(d.date);
-  $("upd").textContent = "Updated " + new Date(d.asof).toLocaleTimeString(undefined, {hour: "numeric", minute: "2-digit", timeZone: "America/New_York"}) + " ET";
+  $("upd").textContent = "💲 Prices collected " + when(d.asof) + " · mid of bid and ask";
   $("prices").innerHTML = Object.entries(d.prices).map(([k, v]) => `<span class="px num">${k}<span>${v.toFixed(2)}</span></span>`).join("");
   $("expl").textContent = `📆 All expire ${nice(d.expiry)} · ⏳ ${daysTo(d.expiry)} days`;
-  all = d.trades.map(t => ({...t, expiry: d.expiry, start: d.date}));
+  all = d.trades.map(t => ({...t, expiry: d.expiry, start: d.date, asof: d.asof}));
 
   const pick = all.find(t => t.rank === 1);
   if (pick) {
@@ -62,10 +63,11 @@ function render() {
     if (w.sitOut || !t) {
       $("friday").innerHTML = `<span class="tag" style="background:var(--purple);color:#fff">🗓️ Friday Play</span><h2>😴 No spread this week</h2><p>The readings were too mixed. Back next Friday.</p>`;
     } else {
-      all.push({...t, lv: "weekly", expiry: w.expiry, start: w.friday});
+      all.push({...t, lv: "weekly", expiry: w.expiry, start: w.friday, asof: w.asof || d.asof});
       $("friday").dataset.id = t.id;
       $("friday").innerHTML = `<div style="display:flex;gap:8px;flex-wrap:wrap"><span class="tag" style="background:var(--purple);color:#fff">🗓️ Friday Play</span>${w.preview ? `<span class="tag" style="background:#fff;border:1px solid #d8cffc;color:var(--purple)">👀 Preview</span>` : ""}</div>
         <h2>${t.tk} ${shape(t)}</h2>
+        ${w.asof ? `<span class="k">💲 Prices collected ${when(w.asof)}</span>` : ""}
         <p style="font-size:16px">🟩 Profit zone: ${t.tk} ${winText(t)} on ${nice(w.expiry)}</p>
         ${legsHTML(t)}
         <div class="stats num"><span><span class="k">💵 Premium</span><b>${usd(t.collect)}</b></span><span><span class="k">⚠️ Risk</span><b>${usd(t.risk)}</b></span>${t.odds ? `<span><span class="k">🎯 Probability</span><b>${t.odds}%</b></span>` : ""}<span><span class="k">⏳ Left</span><b>${daysTo(w.expiry)}d</b></span></div>`;
@@ -126,7 +128,7 @@ function open(id, opener) {
       ${t.legs.map(l => `<tr><td>${t.tk} ${longDate(t.expiry)} $${l.strike} ${l.type === "put" ? "Put" : "Call"}</td><td>${l.side === "sell" ? "🔻 Short" : "🔺 Long"}</td><td>1</td><td>$${l.px.toFixed(2)}</td></tr>`).join("")}
       <tr class="tot"><td>${strategyName(t)}</td><td>Net ${t.debit ? "debit" : "credit"}</td><td></td><td>$${t.limit.toFixed(2)}</td></tr>
     </table></div>
-    <p style="color:var(--soft);font-size:13px">Mid prices at the time of the snapshot. Each contract covers 100 shares, so $${t.limit.toFixed(2)} = ${usd(t.limit * 100)} per set.</p>
+    <p style="color:var(--soft);font-size:13px">💲 Mid prices (halfway between bid and ask) collected ${when(t.asof)}. They change all day. Each contract covers 100 shares, so $${t.limit.toFixed(2)} = ${usd(t.limit * 100)} per set.</p>
     <div class="clock"><span>⏳ <b>${left} days</b> to go · ends ${nice(t.expiry)}</span><div class="bar"><i style="width:${Math.min(100, (total - left) / total * 100)}%"></i></div></div>
   </div>`;
   $("ov").hidden = false; document.body.style.overflow = "hidden"; $("sx").focus();
@@ -138,7 +140,7 @@ $("sx").addEventListener("click", close);
 $("ov").addEventListener("click", e => { if (e.target.id === "ov") close(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("ov").hidden) close(); });
 
-if (DATA) render(); else R.querySelector(".wrap").innerHTML = '<p class="card">📭 Today\'s plays post at about 8:50 AM ET.</p>';
+if (DATA) render(); else R.querySelector(".wrap").innerHTML = '<p class="card">📭 Today\'s plays post at about 10:05 AM ET.</p>';
 
 }
 customElements.define("opty-spread-desk",OptySpreadDesk);

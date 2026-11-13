@@ -363,6 +363,7 @@
  "weekly": {
   "friday": "2026-11-13",
   "expiry": "2026-11-20",
+  "asof": "2026-11-12T07:24:53Z",
   "preview": true,
   "sitOut": false,
   "mood": [
