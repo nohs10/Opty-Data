@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Market Calendar</title><meta name="description" content="Market closures, bond-only closures, early closes, Fed meetings and minutes, and earnings dates."><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗓️</text></svg>">
+</head><body>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
+<style>
+.livelink{display:inline-flex;align-items:center;gap:6px;font:700 14px var(--body);color:#fff;background:var(--blue,#2f6bff);border-radius:999px;padding:8px 14px;text-decoration:none;width:fit-content}.livelink:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+
+:root{--bg:#f4f7fb;--card:#fff;--ink:#0e1b2c;--soft:#5d6b7d;--line:#e3e9f1;--blue:#2f6bff;--blue-soft:#e8efff;--g:#16a457;--g-soft:#e3f6ec;--y:#c58f00;--y-soft:#fff5d6;--r:#d93a2c;--r-soft:#fde7e5;--o:#c25e00;--o-soft:#ffeedd;--p:#6a4cf0;--p-soft:#efebff;--wk:#eef2f7;
+--head:"Bricolage Grotesque","DM Sans",system-ui,sans-serif;--body:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d141d;--card:#151e2a;--ink:#e8eef5;--soft:#93a2b4;--line:#253244;--blue:#7d9cf5;--blue-soft:#1f2a44;--g:#3cc487;--g-soft:#123526;--y:#e6b231;--y-soft:#3a2f0e;--r:#f06a60;--r-soft:#3d1a18;--o:#f0a050;--o-soft:#3b2612;--p:#a594f5;--p-soft:#231d3d;--wk:#111a25;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d141d;--card:#151e2a;--ink:#e8eef5;--soft:#93a2b4;--line:#253244;--blue:#7d9cf5;--blue-soft:#1f2a44;--g:#3cc487;--g-soft:#123526;--y:#e6b231;--y-soft:#3a2f0e;--r:#f06a60;--r-soft:#3d1a18;--o:#f0a050;--o-soft:#3b2612;--p:#a594f5;--p-soft:#231d3d;--wk:#111a25;color-scheme:dark}
+*{box-sizing:border-box}body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.45}
+.wrap{max-width:1180px;margin:0 auto;padding-block:22px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:16px}
+h1,h2,h3{font-family:var(--head);margin:0;letter-spacing:-.02em}h1{font-size:clamp(28px,6vw,38px);font-weight:800}h2{font-size:20px}p{margin:0}
+.k{font-size:12.5px;color:var(--soft)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:grid;gap:10px;min-width:0}
+.btn{font:inherit;font-weight:700;font-size:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:7px 12px;cursor:pointer}
+.btn:hover{border-color:var(--blue)}.btn.primary{background:var(--ink);color:var(--card);border-color:var(--ink)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.dc:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+/* stoplight */
+.lights{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.mk-p{display:inline-flex;align-items:center;gap:5px;font-size:13.5px;font-weight:700;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:4px 12px 4px 8px}
+.mk-p i{font-style:normal}.mk-closed{color:var(--soft)}
+.mk-note{font-size:13px;color:var(--soft)}
+.lights-why{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:6px;font-size:12.5px;color:var(--soft)}
+/* calendar */
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:16px;align-items:start}
+@media (max-width:900px){.layout{grid-template-columns:minmax(0,1fr)}}
+.calhead{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;justify-content:space-between}
+.mon{font-family:var(--head);font-size:22px;font-weight:800;min-width:170px}
+.nav{display:flex;gap:6px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:inherit;font-size:13px;font-weight:700;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:5px 11px;cursor:pointer}
+.chip[aria-pressed="false"]{opacity:.45}
+.dow{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));font-size:11.5px;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.06em}
+.dow span{padding:0 6px 4px}
+.grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--line);gap:1px}
+.dc{background:var(--card);min-height:104px;padding:5px;display:flex;flex-direction:column;gap:3px;min-width:0;cursor:pointer;text-align:left;font:inherit;color:inherit;border:0}
+.dc{overflow:hidden}.evs{display:flex;flex-direction:column;gap:3px;min-width:0;width:100%}.ev{max-width:100%;display:block}
+.dc.we{background:var(--wk)}.dc.other{opacity:.45}
+.dc.sc{background:var(--r-soft)}.dc.bo{background:linear-gradient(135deg,var(--o-soft) 0 50%,var(--card) 50%)}
+.dc.sel{box-shadow:inset 0 0 0 2px var(--blue)}
+.dn{font-weight:700;font-size:13px;width:24px;height:24px;display:grid;place-items:center;border-radius:50%;font-variant-numeric:tabular-nums}
+.dc.today .dn{background:var(--blue);color:#fff}
+.ev{font-size:11px;font-weight:700;line-height:1.25;border-radius:5px;padding:2px 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ev.closed{background:var(--r);color:#fff}.ev.bond{background:var(--o-soft);color:var(--o)}.ev.early{background:var(--y-soft);color:var(--y)}
+.ev.fed{background:var(--p-soft);color:var(--p)}.ev.earn{background:var(--blue-soft);color:var(--blue)}.ev.mine{background:var(--g-soft);color:var(--g)}
+.more{font-size:11px;color:var(--soft);font-weight:700}
+@media (max-width:640px){.dc{min-height:64px;padding:3px}.ev{font-size:0;padding:0;width:8px;height:8px;border-radius:50%;display:inline-block}.dc .evs{display:flex;flex-direction:row;flex-wrap:wrap;gap:3px}.more{display:none}.dn{font-size:12px;width:22px;height:22px}}
+.side{display:grid;gap:12px}
+.dayev{display:grid;gap:8px}
+.it{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:start;border:1px solid var(--line);border-left:5px solid var(--c);border-radius:10px;padding:8px 10px}
+.it b{font-size:14px}.it .e{font-size:18px}
+.agenda{display:grid;gap:6px;font-size:13.5px}.ag{display:grid;grid-template-columns:70px 1fr;gap:8px;align-items:start;cursor:pointer;border-radius:8px;padding:4px}.ag:hover{background:var(--bg)}
+.ag .d{font-size:12px;color:var(--soft);font-weight:700;font-variant-numeric:tabular-nums}
+form.add{display:grid;gap:8px}form.add label{display:grid;gap:3px;font-size:12.5px;color:var(--soft);font-weight:700}
+form.add label{min-width:0}
+form.add input,form.add select,form.add textarea{width:100%;min-width:0;font:inherit;font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:7px 9px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--soft)}.legend span{display:inline-flex;gap:5px;align-items:center}.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+.note{font-size:12px;color:var(--soft)}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:var(--card);padding:9px 14px;border-radius:10px;font-weight:700;font-size:14px;z-index:9}
+</style>
+<div class="wrap">
+  <header style="display:grid;gap:10px"><h1>🗓️ Market Calendar</h1>
+    <div class="lights" id="lights"></div><div class="lights-why" id="why"></div></header>
+  <div class="layout">
+    <section class="card">
+      <div class="calhead"><div class="nav"><button class="btn" id="prev" aria-label="Previous month">‹</button><span class="mon" id="mon"></span><button class="btn" id="next" aria-label="Next month">›</button><button class="btn" id="today">Today</button></div>
+        <div class="chips" id="chips" role="group" aria-label="Show on calendar">
+          <button class="chip" data-k="closed" aria-pressed="true">🔴 Closures</button><button class="chip" data-k="fed" aria-pressed="true">🏛️ Fed</button>
+          <button class="chip" data-k="earn" aria-pressed="true">📅 Earnings</button></div></div>
+      <div><div class="dow"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div><div class="grid" id="grid"></div></div>
+      <div class="legend"><span><i class="sw" style="background:var(--r)"></i>Stock market closed</span><span><i class="sw" style="background:var(--o-soft);border:1px solid var(--o)"></i>Bonds closed, stocks open</span><span><i class="sw" style="background:var(--y-soft);border:1px solid var(--y)"></i>Early close</span><span><i class="sw" style="background:var(--p-soft);border:1px solid var(--p)"></i>Fed</span><span><i class="sw" style="background:var(--blue-soft);border:1px solid var(--blue)"></i>Earnings</span></div>
+    </section>
+    <aside class="side">
+      <section class="card"><h2 id="dayT"></h2><div class="dayev" id="dayEv"></div></section>
+      <section class="card"><h2>⏭️ Coming up</h2><div class="agenda" id="agenda"></div></section>
+    </aside>
+  </div>
+  <p class="note">Sources: NYSE 2026–2027 holiday calendar, SIFMA bond-market recommendations (2026; 2027 bond dates marked * are expected until SIFMA confirms), Federal Reserve FOMC schedule (2027 dates tentative). Fed minutes come out about three weeks after each meeting. Earnings dates from Robinhood. Not investment advice.</p>
+</div>
+<script>
+const SNAP={"asof":"2026-11-13","collected":"2026-11-15","vix":19.3,"etf":{"SPY":{"ivr":0.4935,"iv":0.1387,"hv":0.2084},"QQQ":{"ivr":0.6943,"iv":0.2604,"hv":0.3393},"DIA":{"ivr":0.3632,"iv":0.154,"hv":0.1924}},"stocks":[{"sym":"NVDA","name":"Nvidia","idx":"QQQ \u00b7 SPY","price":161.01,"ivr":0.8462,"iv":0.6086,"hv":0.5009,"ivh":0.6987,"ivl":0.3183,"earn":"2026-11-17","timing":"pm","eps":[{"d":"2025-08-27","e":0.98,"a":1.04},{"d":"2025-11-19","e":1.22,"a":1.3},{"d":"2026-02-25","e":1.5,"a":1.62},{"d":"2026-05-20","e":1.76,"a":1.87},{"d":"2026-08-26","e":2.09,"a":2.22}],"kpis":[{"ic":"\ud83d\udda5\ufe0f","m":"Data center revenue","st":"named"}]},{"sym":"MSFT","name":"Microsoft","idx":"QQQ \u00b7 SPY \u00b7 DIA","price":522.46,"ivr":0.3543,"iv":0.2714,"hv":0.3448,"ivh":0.4776,"ivl":0.2016,"earn":"2027-01-27","timing":"pm","eps":[{"d":"2025-10-29","e":3.66,"a":4.13},{"d":"2026-01-28","e":3.86,"a":4.14},{"d":"2026-04-29","e":4.07,"a":4.27},{"d":"2026-07-29","e":4.23,"a":4.74},{"d":"2026-10-28","e":4.72,"a":4.89}],"kpis":[{"ic":"\u2601\ufe0f","m":"Azure cloud growth","st":"watch"}]},{"sym":"AAPL","name":"Apple","idx":"QQQ \u00b7 SPY \u00b7 DIA","price":355.4,"ivr":0.2947,"iv":0.2774,"hv":0.2503,"ivh":0.3599,"ivl":0.1872,"earn":"2027-01-28","timing":"pm","eps":[{"d":"2025-10-30","e":1.75,"a":1.85},{"d":"2026-01-29","e":2.66,"a":2.84},{"d":"2026-04-30","e":1.94,"a":2.01},{"d":"2026-07-30","e":1.89,"a":2.02},{"d":"2026-11-02","e":1.98,"a":2.1}],"kpis":[{"ic":"\ud83d\udcf1","m":"iPhone revenue","st":"named"}]},{"sym":"AMZN","name":"Amazon","idx":"QQQ \u00b7 SPY \u00b7 DIA","price":264.33,"ivr":0.2766,"iv":0.4514,"hv":0.3917,"ivh":0.5875,"ivl":0.2646,"earn":"2027-02-04","timing":"pm","eps":[{"d":"2025-10-30","e":1.57,"a":1.95},{"d":"2026-02-05","e":1.97,"a":1.95},{"d":"2026-04-29","e":1.64,"a":2.78},{"d":"2026-07-30","e":1.82,"a":5.75},{"d":"2026-10-29","e":1.97,"a":1.89}],"kpis":[{"ic":"\ud83d\udce6","m":"AWS revenue","st":"watch"},{"ic":"\ud83d\uded2","m":"Ad revenue","st":"watch"}]},{"sym":"GOOGL","name":"Alphabet","idx":"QQQ \u00b7 SPY","price":294.05,"ivr":0.4036,"iv":0.3804,"hv":0.4999,"ivh":0.4564,"ivl":0.2738,"earn":"2027-02-03","timing":"pm","eps":[{"d":"2025-10-29","e":2.27,"a":2.87},{"d":"2026-02-04","e":2.61,"a":2.82},{"d":"2026-04-29","e":2.66,"a":5.11},{"d":"2026-07-22","e":2.87,"a":9.11},{"d":"2026-10-28","e":2.99,"a":2.12}],"kpis":[{"ic":"\u2601\ufe0f","m":"Google Cloud revenue","st":"watch"}]},{"sym":"META","name":"Meta","idx":"QQQ \u00b7 SPY","price":637.01,"ivr":0.4651,"iv":0.3945,"hv":0.4156,"ivh":0.591,"ivl":0.2575,"earn":"2027-01-27","timing":"pm","eps":[{"d":"2025-10-29","e":6.66,"a":7.25},{"d":"2026-01-28","e":8.19,"a":8.88},{"d":"2026-04-29","e":6.67,"a":7.31},{"d":"2026-07-29","e":7.18,"a":6.18},{"d":"2026-10-21","e":5.74,"a":7.4}],"kpis":[{"ic":"\ud83d\udc65","m":"Daily active people","st":"watch"}]},{"sym":"AVGO","name":"Broadcom","idx":"QQQ \u00b7 SPY","price":340.12,"ivr":0.6869,"iv":0.424,"hv":0.6701,"ivh":0.7438,"ivl":0.357,"earn":"2026-12-09","timing":"pm","eps":[{"d":"2025-09-04","e":1.54,"a":1.69},{"d":"2025-12-11","e":1.72,"a":1.95},{"d":"2026-03-04","e":1.88,"a":2.05},{"d":"2026-06-03","e":2.32,"a":2.44},{"d":"2026-09-02","e":3.16,"a":3.32}],"kpis":[{"ic":"\ud83e\udde0","m":"AI chip revenue","st":"watch"}]},{"sym":"TSLA","name":"Tesla","idx":"QQQ \u00b7 SPY","price":387.11,"ivr":0.3608,"iv":0.4624,"hv":0.5701,"ivh":0.6714,"ivl":0.4034,"earn":"2027-01-27","timing":"pm","eps":[{"d":"2025-10-22","e":0.5,"a":0.5},{"d":"2026-01-28","e":0.4,"a":0.5},{"d":"2026-04-22","e":0.3,"a":0.41},{"d":"2026-07-22","e":0.44,"a":0.33},{"d":"2026-10-21","e":0.4,"a":0.48}],"kpis":[{"ic":"\ud83d\ude97","m":"Model 3/Y production","st":"named"}]},{"sym":"GS","name":"Goldman Sachs","idx":"DIA \u00b7 SPY","price":911.5,"ivr":0.4166,"iv":0.3319,"hv":0.3671,"ivh":0.4847,"ivl":0.2418,"earn":"2027-01-19","timing":"am","eps":[{"d":"2025-10-14","e":11.02,"a":12.25},{"d":"2026-01-15","e":11.66,"a":14.01},{"d":"2026-04-13","e":16.37,"a":17.55},{"d":"2026-07-14","e":14.1,"a":20.98},{"d":"2026-10-13","e":13.05,"a":17.01}],"kpis":[{"ic":"\ud83c\udfe6","m":"Investment banking fees","st":"watch"}]},{"sym":"LLY","name":"Eli Lilly","idx":"SPY","price":1439.99,"ivr":0.2188,"iv":0.3184,"hv":0.3755,"ivh":0.5109,"ivl":0.2805,"earn":"2027-02-03","timing":"am","eps":[{"d":"2025-10-30","e":5.96,"a":7.02},{"d":"2026-02-04","e":6.96,"a":7.54},{"d":"2026-04-30","e":6.85,"a":8.55},{"d":"2026-08-05","e":6.01,"a":8.38},{"d":"2026-10-29","e":6.36,"a":7.48}],"kpis":[{"ic":"\ud83d\udc8a","m":"Mounjaro + Zepbound revenue","st":"watch"}]},{"sym":"HOOD","name":"Robinhood","idx":"SPY","price":76.62,"ivr":0.5477,"iv":0.7035,"hv":0.6627,"ivh":0.8979,"ivl":0.4449,"earn":"2027-02-09","timing":"pm","eps":[{"d":"2025-11-05","e":0.53,"a":0.61},{"d":"2026-02-10","e":0.63,"a":0.66},{"d":"2026-04-28","e":0.39,"a":0.38},{"d":"2026-07-29","e":0.41,"a":0.62},{"d":"2026-10-27","e":0.56,"a":0.6}],"kpis":[{"ic":"\ud83d\udc65","m":"Funded customers","st":"named"}]},{"sym":"COIN","name":"Coinbase","idx":"SPY","price":126.08,"ivr":0.4523,"iv":0.7251,"hv":0.7011,"ivh":0.9747,"ivl":0.5042,"earn":"2027-02-11","timing":"pm","eps":[{"d":"2025-10-30","e":1.09,"a":1.44},{"d":"2026-02-12","e":1.05,"a":0.66},{"d":"2026-05-07","e":0.11,"a":-0.17},{"d":"2026-07-30","e":0.14,"a":-0.4},{"d":"2026-10-29","e":0.02,"a":0.269}],"kpis":[{"ic":"\ud83d\udd01","m":"Trading volume","st":"named"}]},{"sym":"MARA","name":"MARA Holdings","idx":"Small cap","price":6.83,"ivr":0.3792,"iv":0.9829,"hv":1.0404,"ivh":1.4801,"ivl":0.7875,"earn":"2027-02-25","timing":"pm","eps":[{"d":"2025-11-04","e":0.11,"a":0.27},{"d":"2026-02-26","e":-0.11,"a":-4.52},{"d":"2026-05-11","e":-0.45,"a":-0.61},{"d":"2026-08-06","e":-0.33,"a":-1.6},{"d":"2026-11-09","e":-0.09,"a":-0.5}],"kpis":[{"ic":"\u26cf\ufe0f","m":"Bitcoin produced","st":"named"}]}]};
+fetch('../insurance/data.json?t='+Math.floor(Date.now()/300000),{cache:'no-store'}).then(r=>{if(!r.ok)throw 0;return r.json()}).then(d=>__run(d)).catch(()=>__run(SNAP));
+function __run(INS){
+
+/* ===== Market open/closed stoplight. Calendars: NYSE (2026-27), SIFMA bonds (2026 + Jan 1 2027; rest of 2027 expected) ===== */
+const MKCAL={
+ stockClosed:{"2026-01-01":"New Year's Day","2026-01-19":"Martin Luther King Jr. Day","2026-02-16":"Presidents Day","2026-04-03":"Good Friday","2026-05-25":"Memorial Day","2026-06-19":"Juneteenth","2026-07-03":"Independence Day (observed)","2026-09-07":"Labor Day","2026-11-26":"Thanksgiving","2026-12-25":"Christmas",
+  "2027-01-01":"New Year's Day","2027-01-18":"Martin Luther King Jr. Day","2027-02-15":"Presidents Day","2027-03-26":"Good Friday","2027-05-31":"Memorial Day","2027-06-18":"Juneteenth (observed)","2027-07-05":"Independence Day (observed)","2027-09-06":"Labor Day","2027-11-25":"Thanksgiving","2027-12-24":"Christmas (observed)"},
+ stockEarly:{"2026-11-27":"13:00","2026-12-24":"13:00","2027-11-26":"13:00"},
+ bondClosed:{"2026-01-01":"New Year's Day","2026-01-19":"Martin Luther King Jr. Day","2026-02-16":"Presidents Day","2026-05-25":"Memorial Day","2026-06-19":"Juneteenth","2026-07-03":"Independence Day (observed)","2026-09-07":"Labor Day","2026-10-12":"Columbus Day","2026-11-11":"Veterans Day","2026-11-26":"Thanksgiving","2026-12-25":"Christmas","2027-01-01":"New Year's Day",
+  "2027-01-18":"Martin Luther King Jr. Day*","2027-02-15":"Presidents Day*","2027-05-31":"Memorial Day*","2027-06-18":"Juneteenth*","2027-07-05":"Independence Day*","2027-09-06":"Labor Day*","2027-10-11":"Columbus Day*","2027-11-11":"Veterans Day*","2027-11-25":"Thanksgiving*","2027-12-24":"Christmas*"},
+ bondEarly:{"2026-04-03":"12:00","2026-05-22":"14:00","2026-07-02":"14:00","2026-11-27":"14:00","2026-12-24":"14:00","2026-12-31":"14:00"}};
+function etNow(d){const p=Object.fromEntries(new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",weekday:"short",hour12:false}).formatToParts(d||new Date()).map(x=>[x.type,x.value]));
+  const h=+p.hour%24;return{iso:`${p.year}-${p.month}-${p.day}`,wd:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].indexOf(p.weekday),min:h*60+(+p.minute)}}
+const hm=s=>{const[a,b]=s.split(":").map(Number);return a*60+b};
+const fmtHM=m=>{const h=Math.floor(m/60),mm=m%60;return`${(h+11)%12+1}${mm?":"+String(mm).padStart(2,"0"):""} ${h<12?"AM":"PM"}`};
+function marketStatus(d){const t=etNow(d),wk=t.wd===0||t.wd===6,m=t.min,out=[];
+  // stocks
+  {let s="closed",why="";const hol=MKCAL.stockClosed[t.iso],early=MKCAL.stockEarly[t.iso],close=early?hm(early):960,ahEnd=early?1020:1200;
+   if(wk)why="Weekend";else if(hol)why=hol;
+   else if(m>=570&&m<close){s="open";why=early?`Open · early close ${fmtHM(close)}`:"Open until 4 PM"}
+   else if(m>=240&&m<570){s="limited";why="Pre-market · opens 9:30 AM"}
+   else if(m>=close&&m<ahEnd){s="limited";why=`After hours until ${fmtHM(ahEnd)}`}
+   else why=m<240?"Closed · pre-market at 4 AM":"Closed for the night";
+   out.push({id:"stocks",e:"📈",n:"Stocks",s,why})}
+  // bonds (SIFMA recommended hours, about 8 AM to 5 PM ET)
+  {let s="closed",why="";const hol=MKCAL.bondClosed[t.iso],early=MKCAL.bondEarly[t.iso],close=early?hm(early):1020;
+   if(wk)why="Weekend";else if(hol)why=hol.replace("*","")+(hol.endsWith("*")?" (expected)":"");
+   else if(m>=480&&m<close){s="open";why=early?`Open · early close ${fmtHM(close)}`:"Open until 5 PM"}
+   else{s="limited";why=m<480?"Overnight trading · main session 8 AM":"Overnight trading · thin"}
+   out.push({id:"bonds",e:"🏦",n:"Bonds",s,why})}
+  // futures (CME: Sun 6 PM to Fri 5 PM, daily break 5 to 6 PM)
+  {let s="open",why="Open nearly 24 hours";const hol=MKCAL.stockClosed[t.iso];
+   if(t.wd===6||(t.wd===0&&m<1080)||(t.wd===5&&m>=1020)){s="closed";why=t.wd===0?"Opens 6 PM Sunday":"Weekend · opens 6 PM Sunday"}
+   else if(m>=1020&&m<1080){s="closed";why="Daily break · back at 6 PM"}
+   else if(hol){s="limited";why=`${hol}: holiday hours`}
+   out.push({id:"futures",e:"🛢️",n:"Futures",s,why})}
+  // FX (Sun 5 PM to Fri 5 PM)
+  {let s="open",why="Open 24 hours on weekdays";if(t.wd===6||(t.wd===0&&m<1020)||(t.wd===5&&m>=1020)){s="closed";why=t.wd===0?"Opens 5 PM Sunday":"Weekend · opens 5 PM Sunday"}
+   else if(t.iso.endsWith("-12-25")||t.iso.endsWith("-01-01")){s="limited";why="Holiday · very thin trading"}
+   out.push({id:"fx",e:"💱",n:"Currencies",s,why})}
+  out.push({id:"crypto",e:"🪙",n:"Crypto",s:"open",why:"Always open, 24/7"});
+  return out}
+const MKS={open:{e:"🟢",n:"Open"},limited:{e:"🟡",n:"Limited"},closed:{e:"🔴",n:"Closed"}};
+function mktPills(d){return marketStatus(d).map(x=>`<span class="mk-p mk-${x.s}" title="${x.n}: ${MKS[x.s].n}. ${x.why}"><i>${MKS[x.s].e}</i>${x.n}</span>`).join("")}
+function mktNote(d){const L=marketStatus(d),st=L.find(x=>x.id==="stocks"),bd=L.find(x=>x.id==="bonds");
+  if(st.s!==bd.s&&(st.s==="closed"||bd.s==="closed"))return`${st.s==="closed"?"Stocks closed":"Stocks open"}, ${bd.s==="closed"?"bonds closed":"bonds open"}: ${(st.s==="closed"?st:bd).why}`;
+  return st.why}
+
+const EARN=INS.stocks.map(s=>({d:s.earn,sym:s.sym,name:s.name,t:s.timing,kpi:s.kpis[0]&&s.kpis[0].st==="named"?s.kpis[0].m:""})), FOMC=[["2026-01-27", "2026-01-28", 0, 0], ["2026-03-17", "2026-03-18", 1, 0], ["2026-04-28", "2026-04-29", 0, 0], ["2026-06-16", "2026-06-17", 1, 0], ["2026-07-28", "2026-07-29", 0, 0], ["2026-09-15", "2026-09-16", 1, 0], ["2026-10-27", "2026-10-28", 0, 0], ["2026-12-08", "2026-12-09", 1, 0], ["2027-01-26", "2027-01-27", 0, 1], ["2027-03-16", "2027-03-17", 1, 1], ["2027-04-27", "2027-04-28", 0, 1], ["2027-06-08", "2027-06-09", 1, 1], ["2027-07-27", "2027-07-28", 0, 1], ["2027-09-14", "2027-09-15", 1, 1], ["2027-10-26", "2027-10-27", 0, 1], ["2027-12-07", "2027-12-08", 1, 1]];
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const iso=d=>d.toISOString().slice(0,10);
+const addDays=(s,n)=>{const d=new Date(s+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+n);return iso(d)};
+const nice=(s,o)=>new Date(s+"T12:00:00Z").toLocaleDateString(undefined,{timeZone:"UTC",...(o||{weekday:"short",month:"short",day:"numeric"})});
+let show={closed:1,fed:1,earn:1};
+function eventsOn(d){const L=[],sc=MKCAL.stockClosed[d],bc=MKCAL.bondClosed[d],se=MKCAL.stockEarly[d],be=MKCAL.bondEarly[d];
+  if(show.closed){if(sc)L.push({k:"closed",cls:"closed",e:"🔴",t:"Stocks closed: "+sc,s:`NYSE and Nasdaq closed for ${sc}.${bc?" Bond market closed too.":" Bond market open."}`});
+   if(bc&&!sc)L.push({k:"closed",cls:"bond",e:"🏦",t:"Bonds closed: "+bc.replace("*",""),s:`Stocks trade normally, but the bond market is closed for ${bc.replace("*","")}${bc.endsWith("*")?" (expected, until SIFMA confirms)":""}.`});
+   if(se)L.push({k:"closed",cls:"early",e:"⏰",t:`Stocks close early ${fmtHM(hm(se))}`,s:`Early close at ${fmtHM(hm(se))} ET.`});
+   if(be&&!sc)L.push({k:"closed",cls:"early",e:"⏰",t:`Bonds close early ${fmtHM(hm(be))}`,s:`Bond market recommended to close at ${fmtHM(hm(be))} ET.`})}
+  if(show.fed)for(const[a,b,sep,tent]of FOMC){const tt=tent?" (tentative)":"";
+    if(d===a)L.push({k:"fed",cls:"fed",e:"🏛️",t:"Fed meeting, day 1"+tt,s:"The Federal Open Market Committee starts its two-day meeting."});
+    if(d===b)L.push({k:"fed",cls:"fed",e:"🏛️",t:"Fed decision 2 PM"+(sep?" + projections":"")+tt,s:`Rate decision at 2:00 PM ET, press conference at 2:30 PM.${sep?" Includes new economic projections and the dot plot.":""}`});
+    if(d===addDays(b,21))L.push({k:"fed",cls:"fed",e:"📝",t:"Fed minutes (expected)",s:`Minutes of the ${nice(b,{month:"short",day:"numeric"})} meeting usually come out about three weeks later at 2:00 PM ET.`})}
+  if(show.earn)for(const x of EARN)if(x.d===d)L.push({k:"earn",cls:"earn",e:"📅",t:`${x.sym} earnings ${x.t==="am"?"(before open)":"(after close)"}`,s:`${x.name} reports ${x.t==="am"?"before the open":"after the close"}.${x.kpi?` KPI to watch: ${x.kpi}.`:""}`});
+  return L}
+let cur=new Date(etNow().iso+"T12:00:00Z");cur.setUTCDate(1);let sel=etNow().iso;
+function renderLights(){const L=marketStatus();$("lights").innerHTML=mktPills()+`<span class="mk-note">${esc(mktNote())}</span>`;
+  $("why").innerHTML=L.map(x=>`<span>${MKS[x.s].e} <b>${x.n}</b>: ${esc(x.why)}</span>`).join("")}
+function renderCal(){const y=cur.getUTCFullYear(),m=cur.getUTCMonth();$("mon").textContent=cur.toLocaleDateString(undefined,{month:"long",year:"numeric",timeZone:"UTC"});
+  const first=new Date(Date.UTC(y,m,1)),start=new Date(first);start.setUTCDate(1-first.getUTCDay());const today=etNow().iso;let h="";
+  for(let i=0;i<42;i++){const d=new Date(start);d.setUTCDate(start.getUTCDate()+i);const s=iso(d),wd=d.getUTCDay();if(i>=35&&d.getUTCMonth()!==m)break;
+    const ev=eventsOn(s),cls=["dc",wd===0||wd===6?"we":"",d.getUTCMonth()!==m?"other":"",MKCAL.stockClosed[s]&&show.closed?"sc":"",MKCAL.bondClosed[s]&&!MKCAL.stockClosed[s]&&show.closed&&wd>0&&wd<6?"bo":"",s===today?"today":"",s===sel?"sel":""].join(" ");
+    h+=`<button class="${cls}" data-d="${s}" aria-label="${nice(s,{weekday:"long",month:"long",day:"numeric"})}${ev.length?", "+ev.length+" events":""}"><span class="dn">${d.getUTCDate()}</span><span class="evs">${ev.slice(0,3).map(e=>`<span class="ev ${e.cls}" title="${esc(e.t)}">${e.e} ${esc(e.t)}</span>`).join("")}</span>${ev.length>3?`<span class="more">+${ev.length-3} more</span>`:""}</button>`}
+  $("grid").innerHTML=h;renderDay();renderAgenda()}
+function renderDay(){const ev=eventsOn(sel),wd=new Date(sel+"T12:00:00Z").getUTCDay();$("dayT").textContent=nice(sel,{weekday:"long",month:"long",day:"numeric"});
+  const base=wd===0||wd===6?`<p class="k">Weekend: stocks, bonds, futures and currencies are closed (futures and currencies reopen Sunday evening). Crypto trades 24/7.</p>`:(!ev.some(e=>e.k==="closed")?`<p class="k">Normal trading day: stocks 9:30 AM–4 PM, bonds about 8 AM–5 PM ET.</p>`:"");
+  const col={closed:"var(--r)",bond:"var(--o)",early:"var(--y)",fed:"var(--p)",earn:"var(--blue)"};
+  $("dayEv").innerHTML=base+ev.map(e=>`<div class="it" style="--c:${col[e.cls]}"><span class="e">${e.e}</span><div><b>${esc(e.t)}</b>${e.s?`<p class="k">${esc(e.s)}</p>`:""}</div></div>`).join("")||`<p class="k">Nothing scheduled.</p>`;}
+function renderAgenda(){const t=etNow().iso,L=[];for(let i=0;i<45;i++){const d=addDays(t,i);for(const e of eventsOn(d))L.push({d,e})}
+  $("agenda").innerHTML=L.slice(0,14).map(({d,e})=>`<div class="ag" data-d="${d}"><span class="d">${nice(d,{month:"short",day:"numeric"})}</span><span>${e.e} ${esc(e.t)}</span></div>`).join("")||'<p class="k">Nothing in the next 45 days.</p>'}
+function toast(m){const t=document.createElement("div");t.className="toast";t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2200)}
+document.addEventListener("click",async e=>{const c=e.target.closest("[data-d]");if(c){sel=c.dataset.d;const d=new Date(sel+"T12:00:00Z");if(d.getUTCMonth()!==cur.getUTCMonth()){cur=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),1,12))}renderCal();return}
+  const ch=e.target.closest(".chip");if(ch){show[ch.dataset.k]=!show[ch.dataset.k];ch.setAttribute("aria-pressed",String(!!show[ch.dataset.k]));renderCal();return}
+});
+$("prev").onclick=()=>{cur.setUTCMonth(cur.getUTCMonth()-1);renderCal()};$("next").onclick=()=>{cur.setUTCMonth(cur.getUTCMonth()+1);renderCal()};
+$("today").onclick=()=>{sel=etNow().iso;cur=new Date(sel+"T12:00:00Z");cur.setUTCDate(1);renderCal()};
+renderLights();renderCal();setInterval(renderLights,60000);
+
+}
+</script>
+</body></html>
