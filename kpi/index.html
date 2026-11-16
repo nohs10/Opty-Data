@@ -194,7 +194,7 @@ function bindIns(root, openSheet) {
 
 const $=id=>document.getElementById(id);let filt="all";
 function render(){
-  $("upd").textContent=INS.updated?`💲 Updated ${INS.updated} ET · options from Alpaca, earnings from Nasdaq`:`💲 Snapshot: Robinhood data, ${shortDate(INS.asof)} close · collected ${shortDate(INS.collected)}`;
+  $("upd").textContent=INS.updated?`💲 Updated ${INS.updated} ET · options from Alpaca, earnings from Nasdaq`:`💲 Snapshot: Robinhood data, ${shortDate(INS.asof)} close${INS.collected?" · collected "+shortDate(INS.collected):""}`;
   const up=INS.stocks.filter(s=>daysUntil(s.earn)>=0).sort((a,b)=>a.earn.localeCompare(b.earn))[0];
   if(up){const B=beatOf(up),L=INSL[ivLight(up.ivr)],k=up.kpis[0];
     $("next").innerHTML=`<span class="tag" style="background:rgba(255,255,255,.14)">⏭️ Next KPI moment</span><h2>${up.sym} ${k.ic} ${k.m}</h2><p>${earnLine(up)}</p>
