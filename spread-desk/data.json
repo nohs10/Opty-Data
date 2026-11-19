@@ -1,11 +1,11 @@
 {
- "date": "2026-11-18",
- "asof": "2026-11-18T15:05:02Z",
- "expiry": "2026-12-18",
+ "date": "2026-11-19",
+ "asof": "2026-11-19T15:05:02Z",
+ "expiry": "2027-01-15",
  "prices": {
-  "SPY": 732.54,
-  "QQQ": 659.85,
-  "DIA": 503.76
+  "SPY": 737.27,
+  "QQQ": 673.19,
+  "DIA": 502.13
  },
  "trades": [
   {
@@ -13,34 +13,34 @@
    "tk": "SPY",
    "lv": "green",
    "kind": "put_spread",
-   "price": 732.54,
-   "collect": 26,
-   "risk": 474,
+   "price": 737.27,
+   "collect": 32,
+   "risk": 468,
    "odds": 90,
    "rank": 0,
-   "limit": 0.26,
+   "limit": 0.32,
    "debit": false,
    "legs": [
     {
      "side": "sell",
      "type": "put",
-     "strike": 655.0,
-     "px": 3.16
+     "strike": 640.0,
+     "px": 4.67
     },
     {
      "side": "buy",
      "type": "put",
-     "strike": 650.0,
-     "px": 2.9
+     "strike": 635.0,
+     "px": 4.34
     }
    ],
-   "sp": 655.0,
-   "lp": 650.0,
+   "sp": 640.0,
+   "lp": 635.0,
    "sc": null,
    "lc": null,
-   "lo": 655.0,
+   "lo": 640.0,
    "hi": null,
-   "roomDown": 10.6,
+   "roomDown": 13.2,
    "roomUp": null
   },
   {
@@ -48,34 +48,34 @@
    "tk": "SPY",
    "lv": "yellow",
    "kind": "put_spread",
-   "price": 732.54,
-   "collect": 55,
-   "risk": 445,
+   "price": 737.27,
+   "collect": 61,
+   "risk": 439,
    "odds": 82,
    "rank": 2,
-   "limit": 0.55,
+   "limit": 0.61,
    "debit": false,
    "legs": [
     {
      "side": "sell",
      "type": "put",
-     "strike": 685.0,
-     "px": 5.63
+     "strike": 675.0,
+     "px": 7.97
     },
     {
      "side": "buy",
      "type": "put",
-     "strike": 680.0,
-     "px": 5.08
+     "strike": 670.0,
+     "px": 7.36
     }
    ],
-   "sp": 685.0,
-   "lp": 680.0,
+   "sp": 675.0,
+   "lp": 670.0,
    "sc": null,
    "lc": null,
-   "lo": 685.0,
+   "lo": 675.0,
    "hi": null,
-   "roomDown": 6.5,
+   "roomDown": 8.4,
    "roomUp": null
   },
   {
@@ -83,81 +83,81 @@
    "tk": "SPY",
    "lv": "red",
    "kind": "iron_condor",
-   "price": 732.54,
-   "collect": 162,
-   "risk": 338,
-   "odds": 61,
+   "price": 737.27,
+   "collect": 173,
+   "risk": 327,
+   "odds": 58,
    "rank": 0,
-   "limit": 1.62,
+   "limit": 1.73,
    "debit": false,
    "legs": [
     {
      "side": "sell",
      "type": "put",
-     "strike": 690.0,
-     "px": 6.25
+     "strike": 685.0,
+     "px": 9.4
     },
     {
      "side": "buy",
      "type": "put",
-     "strike": 685.0,
-     "px": 5.63
+     "strike": 680.0,
+     "px": 8.65
     },
     {
      "side": "sell",
      "type": "call",
-     "strike": 765.0,
-     "px": 3.42
+     "strike": 775.0,
+     "px": 4.45
     },
     {
      "side": "buy",
      "type": "call",
-     "strike": 770.0,
-     "px": 2.42
+     "strike": 780.0,
+     "px": 3.47
     }
    ],
-   "sp": 690.0,
-   "lp": 685.0,
-   "sc": 765.0,
-   "lc": 770.0,
-   "lo": 690.0,
-   "hi": 765.0,
-   "roomDown": 5.8,
-   "roomUp": 4.4
+   "sp": 685.0,
+   "lp": 680.0,
+   "sc": 775.0,
+   "lc": 780.0,
+   "lo": 685.0,
+   "hi": 775.0,
+   "roomDown": 7.1,
+   "roomUp": 5.1
   },
   {
    "id": "QQQ-green",
    "tk": "QQQ",
    "lv": "green",
    "kind": "put_spread",
-   "price": 659.85,
-   "collect": 37,
-   "risk": 463,
+   "price": 673.19,
+   "collect": 41,
+   "risk": 459,
    "odds": 90,
    "rank": 3,
-   "limit": 0.37,
+   "limit": 0.41,
    "debit": false,
    "legs": [
     {
      "side": "sell",
      "type": "put",
-     "strike": 575.0,
-     "px": 3.94
+     "strike": 560.0,
+     "px": 5.46
     },
     {
      "side": "buy",
      "type": "put",
-     "strike": 570.0,
-     "px": 3.58
+     "strike": 555.0,
+     "px": 5.05
     }
    ],
-   "sp": 575.0,
-   "lp": 570.0,
+   "sp": 560.0,
+   "lp": 555.0,
    "sc": null,
    "lc": null,
-   "lo": 575.0,
+   "lo": 560.0,
    "hi": null,
-   "roomDown": 12.9,
+   "roomDown": 16.8,
    "roomUp": null
   },
   {
@@ -165,34 +165,34 @@
    "tk": "QQQ",
    "lv": "yellow",
    "kind": "put_spread",
-   "price": 659.85,
-   "collect": 60,
-   "risk": 440,
-   "odds": 84,
+   "price": 673.19,
+   "collect": 73,
+   "risk": 427,
+   "odds": 83,
    "rank": 1,
-   "limit": 0.6,
+   "limit": 0.73,
    "debit": false,
    "legs": [
     {
      "side": "sell",
      "type": "put",
-     "strike": 600.0,
-     "px": 6.43
+     "strike": 595.0,
+     "px": 9.49
     },
     {
      "side": "buy",
      "type": "put",
-     "strike": 595.0,
-     "px": 5.83
+     "strike": 590.0,
+     "px": 8.76
     }
    ],
-   "sp": 600.0,
-   "lp": 595.0,
+   "sp": 595.0,
+   "lp": 590.0,
    "sc": null,
    "lc": null,
-   "lo": 600.0,
+   "lo": 595.0,
    "hi": null,
-   "roomDown": 9.1,
+   "roomDown": 11.6,
    "roomUp": null
   },
   {
@@ -200,81 +200,81 @@
    "tk": "QQQ",
    "lv": "red",
    "kind": "iron_condor",
-   "price": 659.85,
-   "collect": 178,
-   "risk": 322,
+   "price": 673.19,
+   "collect": 170,
+   "risk": 330,
    "odds": 61,
    "rank": 0,
-   "limit": 1.78,
+   "limit": 1.7,
    "debit": false,
    "legs": [
     {
      "side": "sell",
      "type": "put",
-     "strike": 610.0,
-     "px": 7.85
+     "strike": 605.0,
+     "px": 11.13
     },
     {
      "side": "buy",
      "type": "put",
-     "strike": 605.0,
-     "px": 7.09
+     "strike": 600.0,
+     "px": 10.27
     },
     {
      "side": "sell",
      "type": "call",
-     "strike": 705.0,
-     "px": 4.91
+     "strike": 725.0,
+     "px": 5.26
     },
     {
      "side": "buy",
      "type": "call",
-     "strike": 710.0,
-     "px": 3.88
+     "strike": 730.0,
+     "px": 4.43
     }
    ],
-   "sp": 610.0,
-   "lp": 605.0,
-   "sc": 705.0,
-   "lc": 710.0,
-   "lo": 610.0,
-   "hi": 705.0,
-   "roomDown": 7.6,
-   "roomUp": 6.8
+   "sp": 605.0,
+   "lp": 600.0,
+   "sc": 725.0,
+   "lc": 730.0,
+   "lo": 605.0,
+   "hi": 725.0,
+   "roomDown": 10.1,
+   "roomUp": 7.7
   },
   {
    "id": "DIA-green",
    "tk": "DIA",
    "lv": "green",
    "kind": "put_spread",
-   "price": 503.76,
-   "collect": 30,
-   "risk": 470,
+   "price": 502.13,
+   "collect": 33,
+   "risk": 467,
    "odds": 90,
    "rank": 0,
-   "limit": 0.3,
+   "limit": 0.33,
    "debit": false,
    "legs": [
     {
      "side": "sell",
      "type": "put",
-     "strike": 460.0,
-     "px": 1.81
+     "strike": 450.0,
+     "px": 2.33
     },
     {
      "side": "buy",
      "type": "put",
-     "strike": 455.0,
-     "px": 1.51
+     "strike": 445.0,
+     "px": 2.0
     }
    ],
-   "sp": 460.0,
-   "lp": 455.0,
+   "sp": 450.0,
+   "lp": 445.0,
    "sc": null,
    "lc": null,
-   "lo": 460.0,
+   "lo": 450.0,
    "hi": null,
-   "roomDown": 8.7,
+   "roomDown": 10.4,
    "roomUp": null
   },
   {
@@ -282,34 +282,34 @@
    "tk": "DIA",
    "lv": "yellow",
    "kind": "put_spread",
-   "price": 503.76,
-   "collect": 57,
-   "risk": 443,
-   "odds": 83,
+   "price": 502.13,
+   "collect": 60,
+   "risk": 440,
+   "odds": 82,
    "rank": 0,
-   "limit": 0.57,
+   "limit": 0.6,
    "debit": false,
    "legs": [
     {
      "side": "sell",
      "type": "put",
-     "strike": 475.0,
-     "px": 3.15
+     "strike": 470.0,
+     "px": 4.2
     },
     {
      "side": "buy",
      "type": "put",
-     "strike": 470.0,
-     "px": 2.58
+     "strike": 465.0,
+     "px": 3.6
     }
    ],
-   "sp": 475.0,
-   "lp": 470.0,
+   "sp": 470.0,
+   "lp": 465.0,
    "sc": null,
    "lc": null,
-   "lo": 475.0,
+   "lo": 470.0,
    "hi": null,
-   "roomDown": 5.7,
+   "roomDown": 6.4,
    "roomUp": null
   },
   {
@@ -317,47 +317,47 @@
    "tk": "DIA",
    "lv": "red",
    "kind": "iron_condor",
-   "price": 503.76,
-   "collect": 152,
-   "risk": 348,
-   "odds": 61,
+   "price": 502.13,
+   "collect": 162,
+   "risk": 338,
+   "odds": 60,
    "rank": 0,
-   "limit": 1.52,
+   "limit": 1.62,
    "debit": false,
    "legs": [
     {
      "side": "sell",
      "type": "put",
-     "strike": 480.0,
-     "px": 3.83
+     "strike": 475.0,
+     "px": 4.97
     },
     {
      "side": "buy",
      "type": "put",
-     "strike": 475.0,
-     "px": 3.15
+     "strike": 470.0,
+     "px": 4.2
     },
     {
      "side": "sell",
      "type": "call",
-     "strike": 525.0,
-     "px": 2.16
+     "strike": 530.0,
+     "px": 2.76
     },
     {
      "side": "buy",
      "type": "call",
-     "strike": 530.0,
-     "px": 1.31
+     "strike": 535.0,
+     "px": 1.92
     }
    ],
-   "sp": 480.0,
-   "lp": 475.0,
-   "sc": 525.0,
-   "lc": 530.0,
-   "lo": 480.0,
-   "hi": 525.0,
-   "roomDown": 4.7,
-   "roomUp": 4.2
+   "sp": 475.0,
+   "lp": 470.0,
+   "sc": 530.0,
+   "lc": 535.0,
+   "lo": 475.0,
+   "hi": 530.0,
+   "roomDown": 5.4,
+   "roomUp": 5.6
   }
  ],
  "weekly": {
