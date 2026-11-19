@@ -270,6 +270,8 @@ def build(data, prev, opts, stocks, asof_utc):
             id=t["id"], group=t["group"], tk=t["tk"], lv=t["lv"], kind=t["kind"],
             spread_morning=round(base, 2) if base is not None else None,
             spread_now=round(now, 2) if now is not None else None,
+            legs_now=[round(opts[l["occ"]]["mid"], 2) if opts.get(l["occ"]) and opts[l["occ"]]["mid"] else None
+                      for l in t["legs"]],
             day_pct=pct(now, base),
             hour_pct=pct(now, p.get("spread_now")),
             odds_morning=morning, odds_prev=prev_odds, odds_now=o,
@@ -363,7 +365,7 @@ def main():
     out = build(data, prev, opts, stocks, datetime.now(timezone.utc))
     out["missing_quotes"] = missing
     msgs = alerts_for(out, prev)
-    json.dump(out, open(hp, "w"), indent=1)
+    json.dump(out, open(os.path.join(HOME, "hourly-dry.json") if "--dry" in ARGS else hp, "w"), indent=1)
     s = out["summary"]
     log(f"wrote hourly.json: {s['better']} better, {s['steady']} steady, {s['worse']} worse; weekly {out['weekly']['status']}")
     if "--dry" in ARGS:
