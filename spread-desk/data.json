@@ -361,17 +361,17 @@
   }
  ],
  "weekly": {
-  "friday": "2026-11-13",
-  "expiry": "2026-11-20",
-  "asof": "2026-11-13T20:44:00Z",
+  "friday": "2026-11-20",
+  "expiry": "2026-11-27",
+  "asof": "2026-11-20T20:38:03Z",
   "preview": false,
-  "sitOut": true,
+  "sitOut": false,
   "mood": [
    {
     "emo": "\ud83c\udf0a",
     "name": "Volatility",
-    "c": "y",
-    "word": "Choppy"
+    "c": "r",
+    "word": "Stormy"
    },
    {
     "emo": "\ud83e\udded",
@@ -382,8 +382,8 @@
    {
     "emo": "\ud83d\udcb3",
     "name": "Credit",
-    "c": "g",
-    "word": "Healthy"
+    "c": "r",
+    "word": "Stressed"
    },
    {
     "emo": "\ud83e\udde9",
@@ -392,6 +392,42 @@
     "word": "Mixed"
    }
   ],
-  "trades": []
+  "trades": [
+   {
+    "id": "WK-2026-11-20-calldebit",
+    "tk": "SPY",
+    "lv": "weekly",
+    "kind": "call_debit",
+    "price": 691.24,
+    "collect": -284,
+    "risk": 284,
+    "odds": null,
+    "rank": 0,
+    "limit": 2.84,
+    "debit": true,
+    "legs": [
+     {
+      "side": "buy",
+      "type": "call",
+      "strike": 691.0,
+      "px": 14.09
+     },
+     {
+      "side": "sell",
+      "type": "call",
+      "strike": 696.0,
+      "px": 11.25
+     }
+    ],
+    "sp": null,
+    "lp": null,
+    "sc": 696.0,
+    "lc": 691.0,
+    "lo": null,
+    "hi": 696.0,
+    "roomDown": null,
+    "roomUp": 0.7
+   }
+  ]
  }
 }
