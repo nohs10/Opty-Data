@@ -1,27 +1,27 @@
 {
  "v": 1,
- "date": "2026-11-20",
- "asof": "2026-11-20T20:35:03Z",
- "morning_asof": "2026-11-20T15:05:01Z",
+ "date": "2026-11-23",
+ "asof": "2026-11-23T15:35:02Z",
+ "morning_asof": "2026-11-23T15:05:02Z",
  "expiry": "2027-01-15",
  "funds": {
+  "SPY": {
+   "price": 726.14,
+   "prev_close": 689.81,
+   "day_pct": 5.27,
+   "hour_pct": null
+  },
   "DIA": {
-   "price": 481.32,
-   "prev_close": 490.79,
-   "day_pct": -1.93,
-   "hour_pct": -0.44
+   "price": 496.83,
+   "prev_close": 481.08,
+   "day_pct": 3.27,
+   "hour_pct": null
   },
   "QQQ": {
-   "price": 609.51,
-   "prev_close": 645.04,
-   "day_pct": -5.51,
-   "hour_pct": -0.65
-  },
-  "SPY": {
-   "price": 690.12,
-   "prev_close": 715.87,
-   "day_pct": -3.6,
-   "hour_pct": -0.51
+   "price": 655.18,
+   "prev_close": 608.45,
+   "day_pct": 7.68,
+   "hour_pct": null
   }
  },
  "plays": [
@@ -31,24 +31,24 @@
    "tk": "SPY",
    "lv": "green",
    "kind": "put_spread",
-   "spread_morning": 0.31,
-   "spread_now": 0.66,
+   "spread_morning": 0.29,
+   "spread_now": 0.26,
    "legs_now": [
-    10.7,
-    10.04
+    4.06,
+    3.8
    ],
-   "day_pct": 114.52,
-   "hour_pct": 18.75,
+   "day_pct": -8.62,
+   "hour_pct": null,
    "odds_morning": 90,
-   "odds_prev": 83.5,
-   "odds_now": 81.8,
-   "odds_hour_chg": -1.7,
-   "odds_day_chg": -8.2,
-   "signal": "worse",
-   "signal_text": "Odds getting worse: 90% this morning \u2192 82% now (-1.7 this hour)",
-   "room_pct": 10.89,
-   "fund_day_pct": -3.6,
-   "fund_hour_pct": -0.51
+   "odds_prev": null,
+   "odds_now": 91.0,
+   "odds_hour_chg": null,
+   "odds_day_chg": 1.0,
+   "signal": "better",
+   "signal_text": "Odds getting better: 90% this morning \u2192 91% now",
+   "room_pct": 14.62,
+   "fund_day_pct": 5.27,
+   "fund_hour_pct": null
   },
   {
    "id": "SPY-yellow",
@@ -56,24 +56,24 @@
    "tk": "SPY",
    "lv": "yellow",
    "kind": "put_spread",
-   "spread_morning": 0.54,
-   "spread_now": 1.07,
+   "spread_morning": 0.55,
+   "spread_now": 0.5,
    "legs_now": [
-    16.78,
-    15.71
+    6.75,
+    6.25
    ],
-   "day_pct": 98.15,
-   "hour_pct": 9.18,
-   "odds_morning": 83,
-   "odds_prev": 73.8,
-   "odds_now": 71.8,
-   "odds_hour_chg": -2.0,
-   "odds_day_chg": -11.2,
-   "signal": "worse",
-   "signal_text": "Odds getting worse: 83% this morning \u2192 72% now (-2.0 this hour)",
-   "room_pct": 5.81,
-   "fund_day_pct": -3.6,
-   "fund_hour_pct": -0.51
+   "day_pct": -10.0,
+   "hour_pct": null,
+   "odds_morning": 84,
+   "odds_prev": null,
+   "odds_now": 84.8,
+   "odds_hour_chg": null,
+   "odds_day_chg": 0.8,
+   "signal": "steady",
+   "signal_text": "Odds holding steady: 84% this morning \u2192 85% now",
+   "room_pct": 9.8,
+   "fund_day_pct": 5.27,
+   "fund_hour_pct": null
   },
   {
    "id": "SPY-red",
@@ -81,26 +81,26 @@
    "tk": "SPY",
    "lv": "red",
    "kind": "iron_condor",
-   "spread_morning": 1.61,
-   "spread_now": 1.74,
+   "spread_morning": 1.6,
+   "spread_now": 1.67,
    "legs_now": [
-    19.13,
-    17.91,
-    2.41,
-    1.89
+    7.88,
+    7.3,
+    5.26,
+    4.17
    ],
-   "day_pct": 8.39,
-   "hour_pct": 5.76,
+   "day_pct": 4.06,
+   "hour_pct": null,
    "odds_morning": 62,
-   "odds_prev": 59.7,
-   "odds_now": 57.9,
-   "odds_hour_chg": -1.8,
-   "odds_day_chg": -4.1,
-   "signal": "worse",
-   "signal_text": "Odds getting worse: 62% this morning \u2192 58% now (-1.8 this hour)",
-   "room_pct": 4.36,
-   "fund_day_pct": -3.6,
-   "fund_hour_pct": -0.51
+   "odds_prev": null,
+   "odds_now": 61.3,
+   "odds_hour_chg": null,
+   "odds_day_chg": -0.7,
+   "signal": "steady",
+   "signal_text": "Odds holding steady: 62% this morning \u2192 61% now",
+   "room_pct": 6.04,
+   "fund_day_pct": 5.27,
+   "fund_hour_pct": null
   },
   {
    "id": "QQQ-green",
@@ -108,24 +108,24 @@
    "tk": "QQQ",
    "lv": "green",
    "kind": "put_spread",
-   "spread_morning": 0.33,
-   "spread_now": 0.73,
+   "spread_morning": 0.36,
+   "spread_now": 0.33,
    "legs_now": [
-    11.56,
-    10.82
+    4.65,
+    4.32
    ],
-   "day_pct": 122.73,
-   "hour_pct": 9.7,
+   "day_pct": -6.94,
+   "hour_pct": null,
    "odds_morning": 90,
-   "odds_prev": 83.5,
-   "odds_now": 81.9,
-   "odds_hour_chg": -1.6,
-   "odds_day_chg": -8.1,
-   "signal": "worse",
-   "signal_text": "Odds getting worse: 90% this morning \u2192 82% now (-1.6 this hour)",
-   "room_pct": 13.05,
-   "fund_day_pct": -5.51,
-   "fund_hour_pct": -0.65
+   "odds_prev": null,
+   "odds_now": 91.0,
+   "odds_hour_chg": null,
+   "odds_day_chg": 1.0,
+   "signal": "better",
+   "signal_text": "Odds getting better: 90% this morning \u2192 91% now",
+   "room_pct": 17.58,
+   "fund_day_pct": 7.68,
+   "fund_hour_pct": null
   },
   {
    "id": "QQQ-yellow",
@@ -133,24 +133,24 @@
    "tk": "QQQ",
    "lv": "yellow",
    "kind": "put_spread",
-   "spread_morning": 0.65,
-   "spread_now": 1.18,
+   "spread_morning": 0.55,
+   "spread_now": 0.63,
    "legs_now": [
-    18.37,
-    17.19
+    8.52,
+    7.89
    ],
-   "day_pct": 81.54,
-   "hour_pct": 10.28,
-   "odds_morning": 84,
-   "odds_prev": 74.0,
-   "odds_now": 72.2,
-   "odds_hour_chg": -1.8,
-   "odds_day_chg": -11.8,
-   "signal": "worse",
-   "signal_text": "Odds getting worse: 84% this morning \u2192 72% now (-1.8 this hour)",
-   "room_pct": 7.3,
-   "fund_day_pct": -5.51,
-   "fund_hour_pct": -0.65
+   "day_pct": 14.55,
+   "hour_pct": null,
+   "odds_morning": 82,
+   "odds_prev": null,
+   "odds_now": 83.6,
+   "odds_hour_chg": null,
+   "odds_day_chg": 1.6,
+   "signal": "better",
+   "signal_text": "Odds getting better: 82% this morning \u2192 84% now",
+   "room_pct": 11.47,
+   "fund_day_pct": 7.68,
+   "fund_hour_pct": null
   },
   {
    "id": "QQQ-red",
@@ -158,26 +158,26 @@
    "tk": "QQQ",
    "lv": "red",
    "kind": "iron_condor",
-   "spread_morning": 1.93,
-   "spread_now": 2.06,
+   "spread_morning": 1.76,
+   "spread_now": 1.83,
    "legs_now": [
-    22.36,
-    20.95,
-    4.4,
-    3.75
+    9.91,
+    9.21,
+    7.44,
+    6.31
    ],
-   "day_pct": 6.74,
-   "hour_pct": -0.48,
-   "odds_morning": 56,
-   "odds_prev": 54.2,
-   "odds_now": 53.2,
-   "odds_hour_chg": -1.0,
-   "odds_day_chg": -2.8,
+   "day_pct": 3.98,
+   "hour_pct": null,
+   "odds_morning": 60,
+   "odds_prev": null,
+   "odds_now": 58.7,
+   "odds_hour_chg": null,
+   "odds_day_chg": -1.3,
    "signal": "worse",
-   "signal_text": "Odds getting worse: 56% this morning \u2192 53% now (-1.0 this hour)",
-   "room_pct": 4.84,
-   "fund_day_pct": -5.51,
-   "fund_hour_pct": -0.65
+   "signal_text": "Odds getting worse: 60% this morning \u2192 59% now",
+   "room_pct": 8.37,
+   "fund_day_pct": 7.68,
+   "fund_hour_pct": null
   },
   {
    "id": "DIA-green",
@@ -186,23 +186,23 @@
    "lv": "green",
    "kind": "put_spread",
    "spread_morning": 0.29,
-   "spread_now": 0.62,
+   "spread_now": 0.25,
    "legs_now": [
-    5.58,
-    4.95
+    2.19,
+    1.94
    ],
-   "day_pct": 115.52,
-   "hour_pct": 17.92,
-   "odds_morning": 91,
-   "odds_prev": 84.8,
-   "odds_now": 83.0,
-   "odds_hour_chg": -1.8,
-   "odds_day_chg": -8.0,
-   "signal": "worse",
-   "signal_text": "Odds getting worse: 91% this morning \u2192 83% now (-1.8 this hour)",
-   "room_pct": 9.62,
-   "fund_day_pct": -1.93,
-   "fund_hour_pct": -0.44
+   "day_pct": -13.79,
+   "hour_pct": null,
+   "odds_morning": 90,
+   "odds_prev": null,
+   "odds_now": 91.3,
+   "odds_hour_chg": null,
+   "odds_day_chg": 1.3,
+   "signal": "better",
+   "signal_text": "Odds getting better: 90% this morning \u2192 91% now",
+   "room_pct": 12.44,
+   "fund_day_pct": 3.27,
+   "fund_hour_pct": null
   },
   {
    "id": "DIA-yellow",
@@ -210,24 +210,24 @@
    "tk": "DIA",
    "lv": "yellow",
    "kind": "put_spread",
-   "spread_morning": 0.55,
-   "spread_now": 0.98,
+   "spread_morning": 0.61,
+   "spread_now": 0.47,
    "legs_now": [
-    8.93,
-    7.95
+    3.72,
+    3.25
    ],
-   "day_pct": 77.27,
-   "hour_pct": 0.52,
+   "day_pct": -22.13,
+   "hour_pct": null,
    "odds_morning": 84,
-   "odds_prev": 75.5,
-   "odds_now": 73.5,
-   "odds_hour_chg": -2.0,
-   "odds_day_chg": -10.5,
-   "signal": "worse",
-   "signal_text": "Odds getting worse: 84% this morning \u2192 74% now (-2.0 this hour)",
-   "room_pct": 5.47,
-   "fund_day_pct": -1.93,
-   "fund_hour_pct": -0.44
+   "odds_prev": null,
+   "odds_now": 85.2,
+   "odds_hour_chg": null,
+   "odds_day_chg": 1.2,
+   "signal": "better",
+   "signal_text": "Odds getting better: 84% this morning \u2192 85% now",
+   "room_pct": 8.42,
+   "fund_day_pct": 3.27,
+   "fund_hour_pct": null
   },
   {
    "id": "DIA-red",
@@ -235,233 +235,102 @@
    "tk": "DIA",
    "lv": "red",
    "kind": "iron_condor",
-   "spread_morning": 1.59,
-   "spread_now": 1.78,
+   "spread_morning": 1.53,
+   "spread_now": 1.5,
    "legs_now": [
-    11.38,
-    10.07,
-    1.69,
-    1.21
+    4.3,
+    3.72,
+    3.07,
+    2.14
    ],
-   "day_pct": 11.64,
-   "hour_pct": 5.03,
-   "odds_morning": 61,
-   "odds_prev": 57.5,
-   "odds_now": 55.8,
-   "odds_hour_chg": -1.7,
-   "odds_day_chg": -5.2,
-   "signal": "worse",
-   "signal_text": "Odds getting worse: 61% this morning \u2192 56% now (-1.7 this hour)",
-   "room_pct": 3.39,
-   "fund_day_pct": -1.93,
-   "fund_hour_pct": -0.44
+   "day_pct": -1.63,
+   "hour_pct": null,
+   "odds_morning": 63,
+   "odds_prev": null,
+   "odds_now": 63.0,
+   "odds_hour_chg": null,
+   "odds_day_chg": 0.0,
+   "signal": "steady",
+   "signal_text": "Odds holding steady: 63% this morning \u2192 63% now",
+   "room_pct": 5.67,
+   "fund_day_pct": 3.27,
+   "fund_hour_pct": null
+  },
+  {
+   "id": "WK-2026-11-20-calldebit",
+   "group": "weekly",
+   "tk": "SPY",
+   "lv": "weekly",
+   "kind": "call_debit",
+   "spread_morning": 2.84,
+   "spread_now": 4.6,
+   "legs_now": [
+    36.93,
+    32.33
+   ],
+   "day_pct": 61.97,
+   "hour_pct": null,
+   "odds_morning": null,
+   "odds_prev": null,
+   "odds_now": 88.2,
+   "odds_hour_chg": null,
+   "odds_day_chg": null,
+   "signal": "steady",
+   "signal_text": "Odds holding steady: 88% now",
+   "room_pct": 4.15,
+   "fund_day_pct": 5.27,
+   "fund_hour_pct": null
   }
  ],
  "weekly": {
-  "status": "none",
-  "friday": "2026-11-13",
-  "text": "No Friday insurance this week"
+  "status": "live",
+  "friday": "2026-11-20",
+  "expiry": "2026-11-27"
  },
  "summary": {
-  "better": 0,
-  "steady": 0,
-  "worse": 9,
+  "better": 5,
+  "steady": 4,
+  "worse": 1,
   "total": 10
  },
  "readings": [
   {
-   "asof": "2026-11-20T15:35:03Z",
+   "asof": "2026-11-23T15:35:02Z",
    "odds": {
-    "SPY-green": 88.2,
-    "SPY-yellow": 80.6,
-    "SPY-red": 61.5,
-    "QQQ-green": 88.3,
-    "QQQ-yellow": 80.6,
-    "QQQ-red": 55.9,
-    "DIA-green": 89.0,
-    "DIA-yellow": 81.7,
-    "DIA-red": 59.7
+    "SPY-green": 91.0,
+    "SPY-yellow": 84.8,
+    "SPY-red": 61.3,
+    "QQQ-green": 91.0,
+    "QQQ-yellow": 83.6,
+    "QQQ-red": 58.7,
+    "DIA-green": 91.3,
+    "DIA-yellow": 85.2,
+    "DIA-red": 63.0,
+    "WK-2026-11-20-calldebit": 88.2
    },
    "spread": {
-    "SPY-green": 0.36,
-    "SPY-yellow": 0.69,
-    "SPY-red": 1.6,
-    "QQQ-green": 0.46,
-    "QQQ-yellow": 0.75,
-    "QQQ-red": 1.96,
-    "DIA-green": 0.38,
-    "DIA-yellow": 0.65,
-    "DIA-red": 1.65
+    "SPY-green": 0.26,
+    "SPY-yellow": 0.5,
+    "SPY-red": 1.67,
+    "QQQ-green": 0.33,
+    "QQQ-yellow": 0.63,
+    "QQQ-red": 1.83,
+    "DIA-green": 0.25,
+    "DIA-yellow": 0.47,
+    "DIA-red": 1.5,
+    "WK-2026-11-20-calldebit": 4.6
    },
    "funds": {
-    "SPY": 710.05,
-    "DIA": 491.82,
-    "QQQ": 631.44
-   }
-  },
-  {
-   "asof": "2026-11-20T16:35:03Z",
-   "odds": {
-    "SPY-green": 86.9,
-    "SPY-yellow": 78.4,
-    "SPY-red": 61.8,
-    "QQQ-green": 86.8,
-    "QQQ-yellow": 78.4,
-    "QQQ-red": 56.3,
-    "DIA-green": 87.8,
-    "DIA-yellow": 79.9,
-    "DIA-red": 59.4
-   },
-   "spread": {
-    "SPY-green": 0.42,
-    "SPY-yellow": 0.76,
-    "SPY-red": 1.56,
-    "QQQ-green": 0.52,
-    "QQQ-yellow": 0.89,
-    "QQQ-red": 1.93,
-    "DIA-green": 0.39,
-    "DIA-yellow": 0.75,
-    "DIA-red": 1.58
-   },
-   "funds": {
-    "DIA": 489.18,
-    "QQQ": 624.11,
-    "SPY": 704.06
-   }
-  },
-  {
-   "asof": "2026-11-20T17:35:03Z",
-   "odds": {
-    "SPY-green": 86.0,
-    "SPY-yellow": 77.2,
-    "SPY-red": 61.2,
-    "QQQ-green": 86.0,
-    "QQQ-yellow": 77.3,
-    "QQQ-red": 55.5,
-    "DIA-green": 87.3,
-    "DIA-yellow": 78.9,
-    "DIA-red": 59.3
-   },
-   "spread": {
-    "SPY-green": 0.46,
-    "SPY-yellow": 0.81,
-    "SPY-red": 1.59,
-    "QQQ-green": 0.51,
-    "QQQ-yellow": 0.89,
-    "QQQ-red": 2.01,
-    "DIA-green": 0.4,
-    "DIA-yellow": 0.8,
-    "DIA-red": 1.63
-   },
-   "funds": {
-    "QQQ": 621.28,
-    "SPY": 701.02,
-    "DIA": 487.41
-   }
-  },
-  {
-   "asof": "2026-11-20T18:35:03Z",
-   "odds": {
-    "SPY-green": 86.4,
-    "SPY-yellow": 77.7,
-    "SPY-red": 61.7,
-    "QQQ-green": 86.3,
-    "QQQ-yellow": 77.7,
-    "QQQ-red": 56.0,
-    "DIA-green": 87.4,
-    "DIA-yellow": 79.2,
-    "DIA-red": 59.9
-   },
-   "spread": {
-    "SPY-green": 0.44,
-    "SPY-yellow": 0.79,
-    "SPY-red": 1.57,
-    "QQQ-green": 0.53,
-    "QQQ-yellow": 0.92,
-    "QQQ-red": 1.96,
-    "DIA-green": 0.38,
-    "DIA-yellow": 0.75,
-    "DIA-red": 1.59
-   },
-   "funds": {
-    "SPY": 701.83,
-    "DIA": 487.62,
-    "QQQ": 622.15
-   }
-  },
-  {
-   "asof": "2026-11-20T19:35:02Z",
-   "odds": {
-    "SPY-green": 83.5,
-    "SPY-yellow": 73.8,
-    "SPY-red": 59.7,
-    "QQQ-green": 83.5,
-    "QQQ-yellow": 74.0,
-    "QQQ-red": 54.2,
-    "DIA-green": 84.8,
-    "DIA-yellow": 75.5,
-    "DIA-red": 57.5
-   },
-   "spread": {
-    "SPY-green": 0.56,
-    "SPY-yellow": 0.98,
-    "SPY-red": 1.65,
-    "QQQ-green": 0.67,
-    "QQQ-yellow": 1.07,
-    "QQQ-red": 2.07,
-    "DIA-green": 0.53,
-    "DIA-yellow": 0.97,
-    "DIA-red": 1.69
-   },
-   "funds": {
-    "DIA": 483.44,
-    "QQQ": 613.53,
-    "SPY": 693.63
-   }
-  },
-  {
-   "asof": "2026-11-20T20:35:03Z",
-   "odds": {
-    "SPY-green": 81.8,
-    "SPY-yellow": 71.8,
-    "SPY-red": 57.9,
-    "QQQ-green": 81.9,
-    "QQQ-yellow": 72.2,
-    "QQQ-red": 53.2,
-    "DIA-green": 83.0,
-    "DIA-yellow": 73.5,
-    "DIA-red": 55.8
-   },
-   "spread": {
-    "SPY-green": 0.66,
-    "SPY-yellow": 1.07,
-    "SPY-red": 1.74,
-    "QQQ-green": 0.73,
-    "QQQ-yellow": 1.18,
-    "QQQ-red": 2.06,
-    "DIA-green": 0.62,
-    "DIA-yellow": 0.98,
-    "DIA-red": 1.78
-   },
-   "funds": {
-    "DIA": 481.32,
-    "QQQ": 609.51,
-    "SPY": 690.12
+    "SPY": 726.14,
+    "DIA": 496.83,
+    "QQQ": 655.18
    }
   }
  ],
  "missing_quotes": [],
  "alert_state": {
-  "date": "2026-11-20",
-  "low": {
-   "QQQ-yellow": 72.2,
-   "SPY-yellow": 71.8,
-   "DIA-yellow": 73.5,
-   "SPY-green": 83.5,
-   "QQQ-green": 83.5,
-   "DIA-green": 84.8,
-   "DIA-red": 55.8
-  },
+  "date": "2026-11-23",
+  "low": {},
   "room": {}
  }
 }
